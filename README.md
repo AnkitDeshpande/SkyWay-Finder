@@ -11,6 +11,8 @@ The Flight Booking System is a Java-based software solution designed to simplify
 - Generate Reports: Admins can generate reports on flight bookings, including the number of bookings and revenue generated.
 - Logged out: Admins can log out of their account.
 
+  
+
 >**Customer/Traveler**
 - Registered: Customers can register by providing the necessary information.
 - Logged in: Customers can log in using their registered credentials.
