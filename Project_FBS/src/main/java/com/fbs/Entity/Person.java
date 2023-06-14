@@ -3,9 +3,12 @@ package com.fbs.Entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
@@ -18,6 +21,7 @@ public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="PERSON_ID")
 	private int personId;
 
@@ -52,11 +56,11 @@ public class Person implements Serializable {
 
 	//bi-directional many-to-one association to AddressDetail
 	@OneToMany(mappedBy="person")
-	private List<AddressDetail> addressDetails;
+	private Set<AddressDetail> addressDetails;
 
 	//bi-directional many-to-one association to Booking
 	@OneToMany(mappedBy="person")
-	private List<Booking> bookings;
+	private Set<Booking> bookings;
 
 	public Person() {
 	}
@@ -65,8 +69,22 @@ public class Person implements Serializable {
 		return this.personId;
 	}
 
-	public void setPersonId(int personId) {
-		this.personId = personId;
+	public Person(Date dateOfBirth, String emailAddress, String firstName, String gender, String lastName,
+			String middleName, long mobileNumber, String passportNumber, String password, String title,
+			Set<AddressDetail> addressDetails, Set<Booking> bookings) {
+		super();
+		this.dateOfBirth = dateOfBirth;
+		this.emailAddress = emailAddress;
+		this.firstName = firstName;
+		this.gender = gender;
+		this.lastName = lastName;
+		this.middleName = middleName;
+		this.mobileNumber = mobileNumber;
+		this.passportNumber = passportNumber;
+		this.password = password;
+		this.title = title;
+		this.addressDetails = addressDetails;
+		this.bookings = bookings;
 	}
 
 	public Date getDateOfBirth() {
@@ -149,11 +167,11 @@ public class Person implements Serializable {
 		this.title = title;
 	}
 
-	public List<AddressDetail> getAddressDetails() {
+	public Set<AddressDetail> getAddressDetails() {
 		return this.addressDetails;
 	}
 
-	public void setAddressDetails(List<AddressDetail> addressDetails) {
+	public void setAddressDetails(Set<AddressDetail> addressDetails) {
 		this.addressDetails = addressDetails;
 	}
 
@@ -171,11 +189,11 @@ public class Person implements Serializable {
 		return addressDetail;
 	}
 
-	public List<Booking> getBookings() {
+	public Set<Booking> getBookings() {
 		return this.bookings;
 	}
 
-	public void setBookings(List<Booking> bookings) {
+	public void setBookings(Set<Booking> bookings) {
 		this.bookings = bookings;
 	}
 

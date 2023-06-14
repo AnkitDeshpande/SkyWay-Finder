@@ -3,10 +3,11 @@ package com.fbs.Entity;
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -16,7 +17,7 @@ import jakarta.persistence.TemporalType;
 
 public class Flight implements Serializable {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "FLIGHT_ID")
 	private int flightId;
 
@@ -41,7 +42,7 @@ public class Flight implements Serializable {
 
 	// bi-directional many-to-one association to Booking
 	@OneToMany(mappedBy = "flightMaster")
-	private List<Booking> bookings;
+	private Set<Booking> bookings;
 
 	// bi-directional many-to-one association to LocationMaster
 	@ManyToOne
@@ -70,8 +71,22 @@ public class Flight implements Serializable {
 		return this.flightId;
 	}
 
-	public void setFlightId(int flightId) {
-		this.flightId = flightId;
+	public Flight(Time arrivalTime, Time departureTime, Date flightTravelDate, int remainingBusinessSeats,
+			int remainingEconomySeats, int remainingPremiumSeats, Set<Booking> bookings,
+			LocationMaster locationMaster1, LocationMaster locationMaster2, FleetMaster fleetMaster,
+			FareMaster fareMaster) {
+		super();
+		this.arrivalTime = arrivalTime;
+		this.departureTime = departureTime;
+		this.flightTravelDate = flightTravelDate;
+		this.remainingBusinessSeats = remainingBusinessSeats;
+		this.remainingEconomySeats = remainingEconomySeats;
+		this.remainingPremiumSeats = remainingPremiumSeats;
+		this.bookings = bookings;
+		this.locationMaster1 = locationMaster1;
+		this.locationMaster2 = locationMaster2;
+		this.fleetMaster = fleetMaster;
+		this.fareMaster = fareMaster;
 	}
 
 	public Time getArrivalTime() {
@@ -122,11 +137,11 @@ public class Flight implements Serializable {
 		this.remainingPremiumSeats = remainingPremiumSeats;
 	}
 
-	public List<Booking> getBookings() {
+	public Set<Booking> getBookings() {
 		return this.bookings;
 	}
 
-	public void setBookings(List<Booking> bookings) {
+	public void setBookings(Set<Booking> bookings) {
 		this.bookings = bookings;
 	}
 

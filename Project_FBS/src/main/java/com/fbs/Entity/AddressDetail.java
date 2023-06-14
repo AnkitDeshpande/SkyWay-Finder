@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -17,6 +19,7 @@ public class AddressDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ADDRESS_ID")
 	private int addressId;
 
@@ -44,13 +47,22 @@ public class AddressDetail implements Serializable {
 
 	public AddressDetail() {
 	}
+	
+	public AddressDetail( String city, String country, String line1, String line2, String line3,
+			int pincode, String type, Person person) {
+		super();
+		this.city = city;
+		this.country = country;
+		this.line1 = line1;
+		this.line2 = line2;
+		this.line3 = line3;
+		this.pincode = pincode;
+		this.type = type;
+		this.person = person;
+	}
 
 	public int getAddressId() {
 		return this.addressId;
-	}
-
-	public void setAddressId(int addressId) {
-		this.addressId = addressId;
 	}
 
 	public String getCity() {

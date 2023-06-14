@@ -2,6 +2,7 @@ package com.fbs.Service;
 
 import java.util.List;
 
+import com.fbs.Dao.FareMasterDAO;
 import com.fbs.Entity.FareMaster;
 import com.fbs.Exception.NoRecordFoundException;
 import com.fbs.Exception.SomethingWentWrongException;
@@ -10,32 +11,32 @@ public class FareMasterImplementation implements FareMasterService {
 
 	@Override
 	public boolean newFare(FareMaster fareMaster) throws SomethingWentWrongException {
-		// TODO Auto-generated method stub
-		return false;
+		FareMasterDAO fm = new com.fbs.Dao.FareMasterImplementation();
+		return fm.newFare(fareMaster);
 	}
 
 	@Override
 	public boolean modifyFare(FareMaster fareMaster) throws SomethingWentWrongException {
-		// TODO Auto-generated method stub
-		return false;
+		FareMasterDAO fm = new com.fbs.Dao.FareMasterImplementation();
+		return fm.modifyFare(fareMaster);
 	}
 
 	@Override
 	public boolean deleteFare(int fareId) throws SomethingWentWrongException, NoRecordFoundException {
-		// TODO Auto-generated method stub
-		return false;
+		FareMasterDAO fm = new com.fbs.Dao.FareMasterImplementation();
+		return fm.deleteFare(fareId);
 	}
 
 	@Override
 	public FareMaster getFare(int fareMasterId) throws NoRecordFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		FareMasterDAO fm = new com.fbs.Dao.FareMasterImplementation();
+		return fm.getFare(fareMasterId);
 	}
 
 	@Override
 	public List<FareMaster> getAllFareList() throws SomethingWentWrongException {
-		// TODO Auto-generated method stub
-		return null;
+		FareMasterDAO fm = new com.fbs.Dao.FareMasterImplementation();
+		return fm.getAllFareList();
 	}
 
 }
