@@ -1,10 +1,12 @@
 package com.fbs.Entity;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
@@ -17,6 +19,7 @@ public class FleetMaster implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="FLEET_MASTER_ID")
 	private int fleetMasterId;
 
@@ -35,7 +38,7 @@ public class FleetMaster implements Serializable {
 
 	//bi-directional many-to-one association to FlightMaster
 	@OneToMany(mappedBy="fleetMaster")
-	private List<Flight> flightMasters;
+	private Set<Flight> flightMasters;
 
 	public FleetMaster() {
 	}
@@ -44,8 +47,15 @@ public class FleetMaster implements Serializable {
 		return this.fleetMasterId;
 	}
 
-	public void setFleetMasterId(int fleetMasterId) {
-		this.fleetMasterId = fleetMasterId;
+	public FleetMaster(String code, String model, int totalBusinessSeats, int totalEconomySeats,
+			int totalPremiumSeats, Set<Flight> flightMasters) {
+		super();
+		this.code = code;
+		this.model = model;
+		this.totalBusinessSeats = totalBusinessSeats;
+		this.totalEconomySeats = totalEconomySeats;
+		this.totalPremiumSeats = totalPremiumSeats;
+		this.flightMasters = flightMasters;
 	}
 
 	public String getCode() {
@@ -88,11 +98,11 @@ public class FleetMaster implements Serializable {
 		this.totalPremiumSeats = totalPremiumSeats;
 	}
 
-	public List<Flight> getFlightMasters() {
+	public Set<Flight> getFlightMasters() {
 		return this.flightMasters;
 	}
 
-	public void setFlightMasters(List<Flight> flightMasters) {
+	public void setFlightMasters(Set<Flight> flightMasters) {
 		this.flightMasters = flightMasters;
 	}
 

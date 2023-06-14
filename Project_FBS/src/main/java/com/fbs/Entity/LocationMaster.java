@@ -1,10 +1,12 @@
 package com.fbs.Entity;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
@@ -17,6 +19,7 @@ public class LocationMaster implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="LOCATION_MASTER_ID")
 	private int locationMasterId;
 
@@ -31,11 +34,11 @@ public class LocationMaster implements Serializable {
 
 	//bi-directional many-to-one association to Flight
 	@OneToMany(mappedBy="locationMaster1")
-	private List<Flight> flightMasters1;
+	private Set<Flight> flightMasters1;
 
 	//bi-directional many-to-one association to Flight
 	@OneToMany(mappedBy="locationMaster2")
-	private List<Flight> flightMasters2;
+	private Set<Flight> flightMasters2;
 
 	public LocationMaster() {
 	}
@@ -44,8 +47,15 @@ public class LocationMaster implements Serializable {
 		return this.locationMasterId;
 	}
 
-	public void setLocationMasterId(int locationMasterId) {
-		this.locationMasterId = locationMasterId;
+	public LocationMaster(String airportName, String code, String country, String name, Set<Flight> flightMasters1,
+			Set<Flight> flightMasters2) {
+		super();
+		this.airportName = airportName;
+		this.code = code;
+		this.country = country;
+		this.name = name;
+		this.flightMasters1 = flightMasters1;
+		this.flightMasters2 = flightMasters2;
 	}
 
 	public String getAirportName() {
@@ -80,11 +90,11 @@ public class LocationMaster implements Serializable {
 		this.name = name;
 	}
 
-	public List<Flight> getFlights1() {
+	public Set<Flight> getFlights1() {
 		return this.flightMasters1;
 	}
 
-	public void setFlights1(List<Flight> flightMasters1) {
+	public void setFlights1(Set<Flight> flightMasters1) {
 		this.flightMasters1 = flightMasters1;
 	}
 
@@ -102,11 +112,11 @@ public class LocationMaster implements Serializable {
 		return flightMasters1;
 	}
 
-	public List<Flight> getFlights2() {
+	public Set<Flight> getFlights2() {
 		return this.flightMasters2;
 	}
 
-	public void setFlights2(List<Flight> flightMasters2) {
+	public void setFlights2(Set<Flight> flightMasters2) {
 		this.flightMasters2 = flightMasters2;
 	}
 

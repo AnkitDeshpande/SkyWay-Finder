@@ -7,6 +7,8 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -21,6 +23,7 @@ public class Booking implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="BOOKING_ID")
 	private int bookingId;
 
@@ -64,10 +67,20 @@ public class Booking implements Serializable {
 		return this.bookingId;
 	}
 
-	public void setBookingId(int bookingId) {
-		this.bookingId = bookingId;
+	public Booking(Timestamp bookingDate, String bookingNumber, String seatClass, int seatsBooked,
+			int totalCost, Date travelDate, Person person, Flight flightMaster, List<Passenger> passengers) {
+		super();
+		this.bookingDate = bookingDate;
+		this.bookingNumber = bookingNumber;
+		this.seatClass = seatClass;
+		this.seatsBooked = seatsBooked;
+		this.totalCost = totalCost;
+		this.travelDate = travelDate;
+		this.person = person;
+		this.flightMaster = flightMaster;
+		this.passengers = passengers;
 	}
-
+	
 	public Timestamp getBookingDate() {
 		return this.bookingDate;
 	}

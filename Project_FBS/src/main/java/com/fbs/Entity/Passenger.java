@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -15,6 +17,7 @@ public class Passenger implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="PASSENGER_ID")
 	private int passengerId;
 
@@ -52,8 +55,18 @@ public class Passenger implements Serializable {
 		return this.passengerId;
 	}
 
-	public void setPassengerId(int passengerId) {
-		this.passengerId = passengerId;
+	public Passenger(int age, String firstName, String gender, String lastName, String mealPreferences,
+			String middleName, String passengerType, String passportNumber, Booking booking) {
+		super();
+		this.age = age;
+		this.firstName = firstName;
+		this.gender = gender;
+		this.lastName = lastName;
+		this.mealPreferences = mealPreferences;
+		this.middleName = middleName;
+		this.passengerType = passengerType;
+		this.passportNumber = passportNumber;
+		this.booking = booking;
 	}
 
 	public int getAge() {
