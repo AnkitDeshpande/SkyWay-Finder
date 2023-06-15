@@ -1,194 +1,138 @@
 package com.fbs.Entity;
 
-import java.io.Serializable;
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.Table;
 
-public class Flight implements Serializable {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "FLIGHT_ID")
-	private int flightId;
+@Entity
+@Table(name = "flights")
+public class Flight {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(name = "ARRIVAL_TIME")
-	private Time arrivalTime;
+    @Column(name = "flight_number")
+    private String flightNumber;
 
-	@Column(name = "DEPARTURE_TIME")
-	private Time departureTime;
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "FLIGHT_TRAVEL_DATE")
-	private Date flightTravelDate;
+    @OneToMany(mappedBy = "flight")
+    private Set<Booking> bookings;
 
-	@Column(name = "REMAINING_BUSINESS_SEATS")
-	private int remainingBusinessSeats;
+    // Other attributes
+    private String source;
+    private String destination;
+    private LocalDateTime departureTime;
+    private LocalDateTime arrivalTime;
 
-	@Column(name = "REMAINING_ECONOMY_SEATS")
-	private int remainingEconomySeats;
+    // Constructors, getters, and setters
 
-	@Column(name = "REMAINING_PREMIUM_SEATS")
-	private int remainingPremiumSeats;
+    public Flight() {
+        this.bookings = new HashSet<>();
+    }
 
-	// bi-directional many-to-one association to Booking
-	@OneToMany(mappedBy = "flightMaster")
-	private Set<Booking> bookings;
+    public Flight(String flightNumber, Company company, String source, String destination, LocalDateTime departureTime, LocalDateTime arrivalTime) {
+        this.flightNumber = flightNumber;
+        this.company = company;
+        this.source = source;
+        this.destination = destination;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+        this.bookings = new HashSet<>();
+    }
 
-	// bi-directional many-to-one association to LocationMaster
-	@ManyToOne
-	@JoinColumn(name = "DEPARTURE_LOC")
-	private LocationMaster locationMaster1;
+    // Getters and setters
 
-	// bi-directional many-to-one association to LocationMaster
-	@ManyToOne
-	@JoinColumn(name = "ARRIVAL_LOC")
-	private LocationMaster locationMaster2;
+    public Long getId() {
+        return id;
+    }
 
-	// bi-directional many-to-one association to FleetMaster
-	@ManyToOne
-	@JoinColumn(name = "FLEET")
-	private FleetMaster fleetMaster;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	// bi-directional many-to-one association to FareMaster
-	@ManyToOne
-	@JoinColumn(name = "FARE")
-	private FareMaster fareMaster;
+    public String getFlightNumber() {
+        return flightNumber;
+    }
 
-	public Flight() {
-	}
+    public void setFlightNumber(String flightNumber) {
+        this.flightNumber = flightNumber;
+    }
 
-	public int getFlightId() {
-		return this.flightId;
-	}
+    public Company getCompany() {
+        return company;
+    }
 
-	public Flight(Time arrivalTime, Time departureTime, Date flightTravelDate, int remainingBusinessSeats,
-			int remainingEconomySeats, int remainingPremiumSeats, Set<Booking> bookings,
-			LocationMaster locationMaster1, LocationMaster locationMaster2, FleetMaster fleetMaster,
-			FareMaster fareMaster) {
-		super();
-		this.arrivalTime = arrivalTime;
-		this.departureTime = departureTime;
-		this.flightTravelDate = flightTravelDate;
-		this.remainingBusinessSeats = remainingBusinessSeats;
-		this.remainingEconomySeats = remainingEconomySeats;
-		this.remainingPremiumSeats = remainingPremiumSeats;
-		this.bookings = bookings;
-		this.locationMaster1 = locationMaster1;
-		this.locationMaster2 = locationMaster2;
-		this.fleetMaster = fleetMaster;
-		this.fareMaster = fareMaster;
-	}
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 
-	public Time getArrivalTime() {
-		return this.arrivalTime;
-	}
+    public Set<Booking> getBookings() {
+        return bookings;
+    }
 
-	public void setArrivalTime(Time arrivalTime) {
-		this.arrivalTime = arrivalTime;
-	}
+    public void setBookings(Set<Booking> bookings) {
+        this.bookings = bookings;
+    }
 
-	public Time getDepartureTime() {
-		return this.departureTime;
-	}
+    public String getSource() {
+        return source;
+    }
 
-	public void setDepartureTime(Time departureTime) {
-		this.departureTime = departureTime;
-	}
+    public void setSource(String source) {
+        this.source = source;
+    }
 
-	public Date getFlightTravelDate() {
-		return this.flightTravelDate;
-	}
+    public String getDestination() {
+        return destination;
+    }
 
-	public void setFlightTravelDate(Date flightTravelDate) {
-		this.flightTravelDate = flightTravelDate;
-	}
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
 
-	public int getRemainingBusinessSeats() {
-		return this.remainingBusinessSeats;
-	}
+    public LocalDateTime getDepartureTime() {
+        return departureTime;
+    }
 
-	public void setRemainingBusinessSeats(int remainingBusinessSeats) {
-		this.remainingBusinessSeats = remainingBusinessSeats;
-	}
+    public void setDepartureTime(LocalDateTime departureTime) {
+        this.departureTime = departureTime;
+    }
 
-	public int getRemainingEconomySeats() {
-		return this.remainingEconomySeats;
-	}
+    public LocalDateTime getArrivalTime() {
+        return arrivalTime;
+    }
 
-	public void setRemainingEconomySeats(int remainingEconomySeats) {
-		this.remainingEconomySeats = remainingEconomySeats;
-	}
+    public void setArrivalTime(LocalDateTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
 
-	public int getRemainingPremiumSeats() {
-		return this.remainingPremiumSeats;
-	}
+    // Overridden equals() and hashCode() methods
 
-	public void setRemainingPremiumSeats(int remainingPremiumSeats) {
-		this.remainingPremiumSeats = remainingPremiumSeats;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Flight flight = (Flight) o;
+        return Objects.equals(flightNumber, flight.flightNumber);
+    }
 
-	public Set<Booking> getBookings() {
-		return this.bookings;
-	}
-
-	public void setBookings(Set<Booking> bookings) {
-		this.bookings = bookings;
-	}
-
-	public Booking addBooking(Booking booking) {
-		getBookings().add(booking);
-		booking.setFlightMaster(this);
-
-		return booking;
-	}
-
-	public Booking removeBooking(Booking booking) {
-		getBookings().remove(booking);
-		booking.setFlightMaster(null);
-
-		return booking;
-	}
-
-	public LocationMaster getLocationMaster1() {
-		return this.locationMaster1;
-	}
-
-	public void setLocationMaster1(LocationMaster locationMaster1) {
-		this.locationMaster1 = locationMaster1;
-	}
-
-	public LocationMaster getLocationMaster2() {
-		return this.locationMaster2;
-	}
-
-	public void setLocationMaster2(LocationMaster locationMaster2) {
-		this.locationMaster2 = locationMaster2;
-	}
-
-	public FleetMaster getFleetMaster() {
-		return this.fleetMaster;
-	}
-
-	public void setFleetMaster(FleetMaster fleetMaster) {
-		this.fleetMaster = fleetMaster;
-	}
-
-	public FareMaster getFareMaster() {
-		return this.fareMaster;
-	}
-
-	public void setFareMaster(FareMaster fareMaster) {
-		this.fareMaster = fareMaster;
-	}
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(flightNumber);
+    }
 }
+
