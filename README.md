@@ -44,7 +44,6 @@ The Flight Booking System utilizes a MySQL database to store information related
 
 ## Project Structure and Development
 
-=======
 The Flight Booking System is a Java-based software solution designed to simplify the process of booking flights for travelers. It provides a console-based interface for users to search for available flights, compare prices, and make reservations. The system utilizes the Java programming language, MySQL as the database management system, and Hibernate as the Object-Relational Mapping (ORM) framework.
 
 ## Types of Users
