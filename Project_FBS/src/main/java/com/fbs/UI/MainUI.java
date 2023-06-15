@@ -24,7 +24,6 @@ public class MainUI {
 		} else {
 			System.out.println("Invalid username or password.");
 		}
-		
 	}
 	
 	static void adminOperations() {
@@ -38,7 +37,9 @@ public class MainUI {
 	    System.out.println("8. Delete a Flight");
 	    System.out.println("9. get a Flight by Id");
 	    System.out.println("10. View All Flights");
-	    System.out.println("11. Get all Users");
+	    System.out.println("11. Get flights by company");
+	    System.out.println("12. Get flights by Passenger");
+	    System.out.println("13. Get all Users");
 	    System.out.println("0. Logout");
 	}
 
@@ -79,13 +80,13 @@ public class MainUI {
 	                AdminUI.viewAllFlights();
 	                break;
 	            case 11:
-	                AdminUI.getAllUsers();
+	            	AdminUI.getFlightsByCompany(sc);
 	                break;
 	            case 12:
-	            	AdminUI.getFlightsByCompany(sc);
+	            	AdminUI.getFlightsByPassenger(sc);
 	            	break;
 	            case 13:
-	            	AdminUI.getFlightsByPassenger(sc);
+	            	AdminUI.getAllUsers();
 	            	break;
 	            case 0:
 	                System.out.println("Bye Bye Admin");
@@ -94,6 +95,8 @@ public class MainUI {
 	                System.out.println("Invalid Selection, try again");
     		}
     	}while(choice != 0);	
+	    System.out.println("-----------------------------------------------------------------------------");
+	    main(new String[0]);
 	}
 
 	public static void main(String[] args) {
@@ -106,29 +109,32 @@ public class MainUI {
 		System.out.println("4. Exit");
 
 		System.out.print("Enter your choice: ");
-		int choice = sc.nextInt();
+		int choice = 0;
 		
-		switch (choice) {
-		case 1:
-			System.out.println("Admin login selected.");
-				adminLogin(sc);
-			break;
-		case 2:
-			System.out.println("User login selected.");
-			UserUI.userLogin(sc);
-			break;
-		case 3:
-			System.out.println("Not a user? Signup selected.");
-			UserUI.userSignUp(sc);
-			break;
-		case 4:
-			System.out.println("Bye-Bye, Have a Nice Day.");
-			break;
-		default:
-			System.out.println("Invalid choice. Enter choice between 1-4");
-		}
-		
-		System.out.println("-----------------------------------------------------------------------------");
+		do {
+			choice = sc.nextInt();
+			switch (choice) {
+			case 1:
+				System.out.println("Admin login selected.");
+					adminLogin(sc);
+				break;
+			case 2:
+				System.out.println("User login selected.");
+				UserUI.userLogin(sc);
+				break;
+			case 3:
+				System.out.println("Not a user? Signup selected.");
+				UserUI.userSignUp(sc);
+				break;
+			case 4:
+				System.out.println("Bye-Bye, Have a Nice Day.");
+				break;
+			default:
+				System.out.println("Invalid choice. Enter choice between 1-4");
+			}
+			
+			System.out.println("-----------------------------------------------------------------------------");
+		} while (choice!=0);
 
 		sc.close();
 	}

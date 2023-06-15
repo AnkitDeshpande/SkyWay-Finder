@@ -1,5 +1,6 @@
 package com.fbs.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fbs.Dao.FlightDAO;
@@ -25,7 +26,7 @@ public class FlightServImpl  implements FlightService{
 	}
 
 	@Override
-	public void deleteFlight(Flight flight) throws NoRecordFoundException, SomethingWentWrongException {
+	public void deleteFlight(long flight) throws NoRecordFoundException, SomethingWentWrongException {
 		FlightDAO f1 = new FlightDaoImpl();
 		f1.deleteFlight(flight);
 	}
@@ -52,6 +53,13 @@ public class FlightServImpl  implements FlightService{
 	public List<Flight> getFlightsByPassenger(Passenger passenger) throws SomethingWentWrongException {
 		FlightDAO f1 = new FlightDaoImpl();
 		return f1.getFlightsByPassenger(passenger);
+	}
+
+	@Override
+	public List<Flight> filterFlightsByDepartureTime(LocalDateTime startTime, LocalDateTime endTime)
+			throws SomethingWentWrongException, NoRecordFoundException {
+		FlightDAO f1 = new FlightDaoImpl();
+		return f1.filterFlightsByDepartureTime(startTime, endTime);
 	}
 
 }

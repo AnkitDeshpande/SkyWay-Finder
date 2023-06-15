@@ -129,7 +129,7 @@ public class Company {
 	@Override
 	public String toString() {
 		return "Company [id=" + id + ", name=" + name + ", location=" + location + ", contactNumber=" + contactNumber
-				+ ", email=" + email + ", website=" + website + ", flights=" + flights + "]";
+				+ ", email=" + email + ", website=" + website + "]";
 	}
     
 }

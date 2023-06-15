@@ -1,5 +1,6 @@
 package com.fbs.Dao;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,6 +13,7 @@ import com.fbs.Utility.EMUtils;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Query;
 
 public class FlightDaoImpl implements FlightDAO {
 
@@ -66,7 +68,7 @@ public class FlightDaoImpl implements FlightDAO {
 	}
 
 	@Override
-	public void deleteFlight(Flight flight) throws NoRecordFoundException, SomethingWentWrongException {
+	public void deleteFlight(long id) throws NoRecordFoundException, SomethingWentWrongException {
 		EntityManager em = null;
 		EntityTransaction et = null;
 		try {
@@ -74,9 +76,15 @@ public class FlightDaoImpl implements FlightDAO {
 			et = em.getTransaction();
 
 			et.begin();
-			em.remove(flight);
+			Query query = em.createQuery("DELETE FROM Flight f WHERE f.id = :flightId");
+			query.setParameter("flightId", id);
+			int deletedCount = query.executeUpdate();
 			et.commit();
 
+			if (deletedCount == 0) {
+	            throw new NoRecordFoundException("Flight not found with ID: " + id);
+	        }
+			
 		} catch (Exception e) {
 			et.rollback();
 			System.out.println(e.getMessage());
@@ -88,24 +96,52 @@ public class FlightDaoImpl implements FlightDAO {
 
 	@Override
 	public Flight getFlightById(int flightId) throws NoRecordFoundException, SomethingWentWrongException {
-
-		return null;
+		try (EntityManager em = EMUtils.connect()) {
+			Flight flight = em.find(Flight.class, (long) flightId);
+			if (flight == null) {
+				throw new NoRecordFoundException("Company not found");
+			}
+			return flight;
+		} catch (Exception e) {
+			throw new SomethingWentWrongException("Something went wrong while retrieving company");
+		}
 	}
 
 	@Override
 	public List<Flight> getAllFlights() throws SomethingWentWrongException {
-		// TODO Auto-generated method stub
-		return null;
+		try (EntityManager em = EMUtils.connect()) {
+			String Q = "Select f from Flight f";
+			Query query = em.createQuery(Q);
+			List<Flight> flights = (List<Flight>) query.getResultList();
+			return flights;
+		} catch (Exception e) {
+			throw new SomethingWentWrongException("Something went wrong while retrieving company");
+		}
 	}
 
 	@Override
 	public List<Flight> getFlightsByCompany(Company company) throws SomethingWentWrongException {
+		try (EntityManager em = EMUtils.connect()) {
+			
+			String Q = "SELECT f FROM Flight f WHERE f.company.id = :id";
+			Query query = em.createQuery(Q);
+			query.setParameter("id", company.getId());
+			List<Flight> flights = (List<Flight>) query.getResultList();
+			return flights;
+		} catch (Exception e) {
+			throw new SomethingWentWrongException("Something went wrong while retrieving company");
+		}
+	}
+
+	@Override
+	public List<Flight> getFlightsByPassenger(Passenger passenger) throws SomethingWentWrongException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Flight> getFlightsByPassenger(Passenger passenger) throws SomethingWentWrongException {
+	public List<Flight> filterFlightsByDepartureTime(LocalDateTime startTime, LocalDateTime endTime)
+			throws SomethingWentWrongException, NoRecordFoundException {
 		// TODO Auto-generated method stub
 		return null;
 	}

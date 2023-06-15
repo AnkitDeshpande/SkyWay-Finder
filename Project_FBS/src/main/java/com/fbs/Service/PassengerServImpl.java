@@ -5,36 +5,49 @@ import java.util.List;
 import com.fbs.Dao.PassengerDAO;
 import com.fbs.Dao.PassengerDaoImpl;
 import com.fbs.Entity.Passenger;
+import com.fbs.Exception.LoginException;
 import com.fbs.Exception.NoRecordFoundException;
 import com.fbs.Exception.SomethingWentWrongException;
 
-public class PassengerServImpl implements PassengerService{
+public class PassengerServImpl implements PassengerService {
+
+	@Override
+	public void login(String email, String password) throws LoginException {
+		PassengerDAO p1 = new PassengerDaoImpl();
+		p1.login(email, password);
+	}
+
+	@Override
+	public void signup(String email, String password) throws LoginException {
+		PassengerDAO p1 = new PassengerDaoImpl();
+		p1.signup(email, password);
+	}
 
 	@Override
 	public void savePassenger(Passenger passenger) throws SomethingWentWrongException {
 		PassengerDAO p1 = new PassengerDaoImpl();
 		p1.savePassenger(passenger);
-		
+
 	}
 
 	@Override
 	public void updatePassenger(Passenger passenger) throws NoRecordFoundException, SomethingWentWrongException {
 		PassengerDAO p1 = new PassengerDaoImpl();
 		p1.updatePassenger(passenger);
-		
+
 	}
 
 	@Override
 	public void deletePassenger(Passenger passenger) throws NoRecordFoundException, SomethingWentWrongException {
 		PassengerDAO p1 = new PassengerDaoImpl();
 		p1.deletePassenger(passenger);
-		
+
 	}
 
 	@Override
 	public Passenger getPassengerById(int passengerId) throws NoRecordFoundException, SomethingWentWrongException {
 		PassengerDAO p1 = new PassengerDaoImpl();
-	
+
 		return p1.getPassengerById(passengerId);
 	}
 
