@@ -3,16 +3,17 @@ package com.fbs.Service;
 import java.util.List;
 
 import com.fbs.Entity.Booking;
+import com.fbs.Entity.Flight;
+import com.fbs.Entity.Passenger;
 import com.fbs.Exception.NoRecordFoundException;
 import com.fbs.Exception.SomethingWentWrongException;
 
 public interface BookingService {
-	public boolean newBooking(Booking booking)  throws SomethingWentWrongException;
-
-	public List<Booking> getBookedDetails(int personId) throws SomethingWentWrongException, NoRecordFoundException;
-
-	public boolean deleteBooking(int bookingId)  throws SomethingWentWrongException, NoRecordFoundException;
-
-	public Booking getBooking(int bookingId) throws NoRecordFoundException;
-
+    void saveBooking(Booking booking) throws SomethingWentWrongException;
+    void updateBooking(Booking booking) throws NoRecordFoundException, SomethingWentWrongException;
+    void deleteBooking(Booking booking) throws NoRecordFoundException, SomethingWentWrongException;
+    Booking getBookingById(int bookingId) throws NoRecordFoundException, SomethingWentWrongException;
+    List<Booking> getAllBookings() throws SomethingWentWrongException;
+    List<Booking> getBookingsByPassenger(Passenger passenger) throws SomethingWentWrongException;
+    List<Booking> getBookingsByFlight(Flight flight) throws SomethingWentWrongException;
 }
