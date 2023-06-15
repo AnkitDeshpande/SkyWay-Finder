@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,9 +20,22 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "Company_Name")
     private String name;
-
-    @OneToMany(mappedBy = "company")
+    
+    @Column(name = "location")
+    private String location;
+    
+    @Column(name = "contact_number")
+    private String contactNumber;
+    
+    @Column(name = "email")
+    private String email;
+    
+    @Column(name = "website")
+    private String website;
+    
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
     private Set<Flight> flights;
 
     // Constructors, getters, and setters
@@ -29,19 +44,23 @@ public class Company {
         this.flights = new HashSet<>();
     }
 
-    public Company(String name) {
-        this.name = name;
-        this.flights = new HashSet<>();
-    }
+    public Company(String name, String location, String contactNumber, String email, String website,
+			Set<Flight> flights) {
+		super();
+		this.name = name;
+		this.location = location;
+		this.contactNumber = contactNumber;
+		this.email = email;
+		this.website = website;
+		this.flights = new HashSet<>();
+	}
 
-    // Getters and setters
+
+
+	// Getters and setters
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -52,7 +71,39 @@ public class Company {
         this.name = name;
     }
 
-    public Set<Flight> getFlights() {
+    public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getContactNumber() {
+		return contactNumber;
+	}
+
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+
+	public Set<Flight> getFlights() {
         return flights;
     }
 
@@ -74,6 +125,13 @@ public class Company {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+	@Override
+	public String toString() {
+		return "Company [id=" + id + ", name=" + name + ", location=" + location + ", contactNumber=" + contactNumber
+				+ ", email=" + email + ", website=" + website + ", flights=" + flights + "]";
+	}
+    
 }
 
 

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,11 +26,11 @@ public class Flight {
     @Column(name = "flight_number")
     private String flightNumber;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @OneToMany(mappedBy = "flight")
+    @OneToMany(mappedBy = "flight", fetch = FetchType.EAGER)
     private Set<Booking> bookings;
 
     // Other attributes
@@ -123,6 +124,13 @@ public class Flight {
     // Overridden equals() and hashCode() methods
 
     @Override
+	public String toString() {
+		return "Flight [id=" + id + ", flightNumber=" + flightNumber + ", bookings=" + bookings
+				+ ", source=" + source + ", destination=" + destination + ", departureTime=" + departureTime
+				+ ", arrivalTime=" + arrivalTime + "]";
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
