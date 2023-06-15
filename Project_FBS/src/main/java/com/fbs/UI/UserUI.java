@@ -2,13 +2,39 @@ package com.fbs.UI;
 
 import java.util.Scanner;
 
+import com.fbs.Exception.LoginException;
+import com.fbs.Service.PassengerServImpl;
+import com.fbs.Service.PassengerService;
+
 public class UserUI {
 	static void userLogin(Scanner sc) {
-		processUserMenuOption(sc);
+		System.out.println("Enter email : ");
+		String email = sc.next();
+		System.out.println("Enter Password : ");
+		String password = sc.next();
+		
+		PassengerService p1 = new PassengerServImpl();
+		try {
+			p1.login(email, password);
+		} catch (LoginException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	static void userSignUp(Scanner sc) {
-
+		System.out.println("Enter email : ");
+		String email = sc.next();
+		System.out.println("Enter Password : ");
+		String password = sc.next();
+		
+		PassengerService p1 = new PassengerServImpl();
+		try {
+			p1.signup(email, password);
+			MainUI.main(new String[0]);
+		} catch (LoginException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void searchFlights(Scanner sc) {

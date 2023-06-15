@@ -19,128 +19,130 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "flights")
 public class Flight {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(name = "flight_number")
-    private String flightNumber;
+	@Column(name = "flight_number")
+	private String flightNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id")
-    private Company company;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "company_id")
+	private Company company;
 
-    @OneToMany(mappedBy = "flight", fetch = FetchType.EAGER)
-    private Set<Booking> bookings;
+	@OneToMany(mappedBy = "flight", fetch = FetchType.EAGER)
+	private Set<Booking> bookings;
 
-    // Other attributes
-    private String source;
-    private String destination;
-    private LocalDateTime departureTime;
-    private LocalDateTime arrivalTime;
+	// Other attributes
+	private String source;
+	private String destination;
+	private LocalDateTime departureTime;
+	private LocalDateTime arrivalTime;
 
-    // Constructors, getters, and setters
+	// Constructors, getters, and setters
 
-    public Flight() {
-        this.bookings = new HashSet<>();
-    }
+	public Flight() {
+		this.bookings = new HashSet<>();
+	}
 
-    public Flight(String flightNumber, Company company, String source, String destination, LocalDateTime departureTime, LocalDateTime arrivalTime) {
-        this.flightNumber = flightNumber;
-        this.company = company;
-        this.source = source;
-        this.destination = destination;
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
-        this.bookings = new HashSet<>();
-    }
+	public Flight(String flightNumber, Company company, String source, String destination, LocalDateTime departureTime,
+			LocalDateTime arrivalTime) {
+		this.flightNumber = flightNumber;
+		this.company = company;
+		this.source = source;
+		this.destination = destination;
+		this.departureTime = departureTime;
+		this.arrivalTime = arrivalTime;
+		this.bookings = new HashSet<>();
+	}
 
-    // Getters and setters
+	// Getters and setters
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getFlightNumber() {
-        return flightNumber;
-    }
+	public String getFlightNumber() {
+		return flightNumber;
+	}
 
-    public void setFlightNumber(String flightNumber) {
-        this.flightNumber = flightNumber;
-    }
+	public void setFlightNumber(String flightNumber) {
+		this.flightNumber = flightNumber;
+	}
 
-    public Company getCompany() {
-        return company;
-    }
+	public Company getCompany() {
+		return company;
+	}
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
+	public void setCompany(Company company) {
+		this.company = company;
+	}
 
-    public Set<Booking> getBookings() {
-        return bookings;
-    }
+	public Set<Booking> getBookings() {
+		return bookings;
+	}
 
-    public void setBookings(Set<Booking> bookings) {
-        this.bookings = bookings;
-    }
+	public void setBookings(Set<Booking> bookings) {
+		this.bookings = bookings;
+	}
 
-    public String getSource() {
-        return source;
-    }
+	public String getSource() {
+		return source;
+	}
 
-    public void setSource(String source) {
-        this.source = source;
-    }
+	public void setSource(String source) {
+		this.source = source;
+	}
 
-    public String getDestination() {
-        return destination;
-    }
+	public String getDestination() {
+		return destination;
+	}
 
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
 
-    public LocalDateTime getDepartureTime() {
-        return departureTime;
-    }
+	public LocalDateTime getDepartureTime() {
+		return departureTime;
+	}
 
-    public void setDepartureTime(LocalDateTime departureTime) {
-        this.departureTime = departureTime;
-    }
+	public void setDepartureTime(LocalDateTime departureTime) {
+		this.departureTime = departureTime;
+	}
 
-    public LocalDateTime getArrivalTime() {
-        return arrivalTime;
-    }
+	public LocalDateTime getArrivalTime() {
+		return arrivalTime;
+	}
 
-    public void setArrivalTime(LocalDateTime arrivalTime) {
-        this.arrivalTime = arrivalTime;
-    }
+	public void setArrivalTime(LocalDateTime arrivalTime) {
+		this.arrivalTime = arrivalTime;
+	}
 
-    // Overridden equals() and hashCode() methods
+	// Overridden equals() and hashCode() methods
 
-    @Override
+	@Override
 	public String toString() {
-		return "Flight [id=" + id + ", flightNumber=" + flightNumber + ", bookings=" + bookings
-				+ ", source=" + source + ", destination=" + destination + ", departureTime=" + departureTime
-				+ ", arrivalTime=" + arrivalTime + "]";
+		return "Flight [id=" + id + ", flightNumber=" + flightNumber + ", source=" + source
+				+ ", destination=" + destination + ", departureTime=" + departureTime + ", arrivalTime=" + arrivalTime
+				+ "]";
 	}
 
 	@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Flight flight = (Flight) o;
-        return Objects.equals(flightNumber, flight.flightNumber);
-    }
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Flight flight = (Flight) o;
+		return Objects.equals(flightNumber, flight.flightNumber);
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(flightNumber);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(flightNumber);
+	}
 }
-

@@ -227,22 +227,23 @@ public class AdminUI {
 				System.out.println("Destination: " + flight.getDestination());
 				System.out.println("Departure Time: " + flight.getDepartureTime());
 				System.out.println("Arrival Time: " + flight.getArrivalTime());
+				System.out.println("---------------------------------");
 			} else {
 				System.out.println("Flight not found with ID: " + f_Id);
 			}
 		} catch (NoRecordFoundException | SomethingWentWrongException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 
 	public static void deleteFlight(Scanner sc) {
 		System.out.println("Enter Flight ID:");
-		int flightId = sc.nextInt();
+		long flightId = sc.nextLong();
 
 		try {
 			FlightService flightService = new FlightServImpl();
 			Flight f1 = EMUtils.connect().find(Flight.class, flightId);
-			flightService.deleteFlight(f1);
+			flightService.deleteFlight(flightId);
 			System.out.println("Flight deleted successfully");
 		} catch (NoRecordFoundException | SomethingWentWrongException e) {
 			System.out.println("Flight not found with ID: " + flightId);
@@ -250,18 +251,62 @@ public class AdminUI {
 	}
 
 	public static void viewAllFlights() {
+		FlightService f2 = new FlightServImpl();
+		try {
+			List<Flight> flights = f2.getAllFlights();
+			if (flights != null) {
+				for (Flight flight : flights) {
+					System.out.println("Flight Details:");
+					System.out.println("Flight Number: " + flight.getFlightNumber());
+					System.out.println("Company: " + flight.getCompany().getName());
+					System.out.println("Source: " + flight.getSource());
+					System.out.println("Destination: " + flight.getDestination());
+					System.out.println("Departure Time: " + flight.getDepartureTime());
+					System.out.println("Arrival Time: " + flight.getArrivalTime());
+					System.out.println("---------------------------------");
+				}
 
-	}
-
-	public static void getAllUsers() {
-
+			} else {
+				System.out.println("Flights not found");
+			}
+		} catch (SomethingWentWrongException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public static void getFlightsByCompany(Scanner sc) {
+		System.out.println("Enter Company Id: ");
+		long id = new Scanner(System.in).nextLong();
 
+		FlightService f2 = new FlightServImpl();
+		Company c = EMUtils.connect().find(Company.class, id);
+		try {
+			List<Flight> flights = f2.getFlightsByCompany(c);
+			if (flights != null) {
+				for (Flight flight : flights) {
+					System.out.println("Flight Details:");
+					System.out.println("Flight Number: " + flight.getFlightNumber());
+					System.out.println("Company: " + flight.getCompany().getName());
+					System.out.println("Source: " + flight.getSource());
+					System.out.println("Destination: " + flight.getDestination());
+					System.out.println("Departure Time: " + flight.getDepartureTime());
+					System.out.println("Arrival Time: " + flight.getArrivalTime());
+					System.out.println("---------------------------------");
+				}
+
+			} else {
+				System.out.println("Flights not found");
+			}
+		} catch (SomethingWentWrongException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public static void getFlightsByPassenger(Scanner sc) {
+		
+	}
+
+	public static void getAllUsers() {
 
 	}
 
