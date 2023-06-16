@@ -42,7 +42,7 @@ public class Passenger {
 	@OneToMany(mappedBy = "passenger", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Booking> bookings = new HashSet<>();
 
-	// Constructors
+	// Constructors, getter, setters,
 
 	public Passenger() {
 	}

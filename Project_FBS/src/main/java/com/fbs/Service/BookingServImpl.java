@@ -1,28 +1,26 @@
 package com.fbs.Service;
 
-import java.util.List;
+import java.util.Scanner;
 
 import com.fbs.Dao.BookingDAO;
 import com.fbs.Dao.BookingDaoImpl;
 import com.fbs.Entity.Booking;
-import com.fbs.Entity.Flight;
-import com.fbs.Entity.Passenger;
 import com.fbs.Exception.NoRecordFoundException;
 import com.fbs.Exception.SomethingWentWrongException;
 
 public class BookingServImpl implements BookingService {
 
 	@Override
-	public void saveBooking() throws SomethingWentWrongException {
+	public void saveBooking(Scanner sc) throws SomethingWentWrongException {
 		BookingDAO b1 = new BookingDaoImpl();
-		b1.saveBooking();
+		b1.saveBooking(sc);
 
 	}
 
 	@Override
-	public void deleteBooking(Booking booking) throws NoRecordFoundException, SomethingWentWrongException {
+	public void deleteBooking(Scanner sc) throws NoRecordFoundException, SomethingWentWrongException {
 		BookingDAO b1 = new BookingDaoImpl();
-		b1.deleteBooking(booking);
+		b1.deleteBooking(sc);
 	}
 
 	@Override

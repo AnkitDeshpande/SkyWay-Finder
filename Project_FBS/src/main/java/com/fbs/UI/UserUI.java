@@ -221,19 +221,40 @@ public class UserUI {
 	public static void confirmBooking(Scanner sc) {
 		BookingService b1 = new BookingServImpl();
 		try {
-			b1.saveBooking();
+			b1.saveBooking(sc);
 		} catch (SomethingWentWrongException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public static void viewBookings(Scanner sc) {
-		
+	public static void viewBookingById(Scanner sc) {
+		System.out.println("Enter Your Passenger id:");
+		int id = sc.nextInt();
+		BookingService b1 = new BookingServImpl();
+		try {
+			Booking b = b1.getBookingById(id);
+			System.out.println("--------------------------------------");
+			System.out.println("Name : " + b.getPassenger().getName());
+			System.out.println("Seat Number : " + b.getSeatNumber());
+			System.out.println("Source : " + b.getPassenger().getSource());
+			System.out.println("Destination : " + b.getPassenger().getDestination());
+			System.out.println("Nationality : " + b.getPassenger().getNationality());
+			System.out.println("--------------------------------------");
+
+		} catch (NoRecordFoundException | SomethingWentWrongException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void cancelBooking(Scanner sc) {
-
+		BookingService b = new BookingServImpl();
+		try {
+			b.deleteBooking(sc);
+			System.out.println("Booking Cancelled. ");
+		} catch (NoRecordFoundException | SomethingWentWrongException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void showUserMenu() {
@@ -275,7 +296,7 @@ public class UserUI {
 				confirmBooking(sc);
 				break;
 			case 7:
-				viewBookings(sc);
+				viewBookingById(sc);
 				break;
 			case 8:
 				cancelBooking(sc);
