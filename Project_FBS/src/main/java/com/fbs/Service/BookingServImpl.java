@@ -13,16 +13,10 @@ import com.fbs.Exception.SomethingWentWrongException;
 public class BookingServImpl implements BookingService {
 
 	@Override
-	public void saveBooking(Booking booking) throws SomethingWentWrongException {
+	public void saveBooking() throws SomethingWentWrongException {
 		BookingDAO b1 = new BookingDaoImpl();
-		b1.saveBooking(booking);
+		b1.saveBooking();
 
-	}
-
-	@Override
-	public void updateBooking(Booking booking) throws NoRecordFoundException, SomethingWentWrongException {
-		BookingDAO b1 = new BookingDaoImpl();
-		b1.updateBooking(booking);
 	}
 
 	@Override
@@ -38,21 +32,9 @@ public class BookingServImpl implements BookingService {
 	}
 
 	@Override
-	public List<Booking> getAllBookings() throws SomethingWentWrongException {
+	public Booking getBookingsByPassenger(long id) throws SomethingWentWrongException {
 		BookingDAO b1 = new BookingDaoImpl();
-		return b1.getAllBookings();
-	}
-
-	@Override
-	public List<Booking> getBookingsByPassenger(Passenger passenger) throws SomethingWentWrongException {
-		BookingDAO b1 = new BookingDaoImpl();
-		return b1.getBookingsByPassenger(passenger);
-	}
-
-	@Override
-	public List<Booking> getBookingsByFlight(Flight flight) throws SomethingWentWrongException {
-		BookingDAO b1 = new BookingDaoImpl();
-		return b1.getBookingsByFlight(flight);
+		return b1.getBookingsByPassenger(id);
 	}
 
 }

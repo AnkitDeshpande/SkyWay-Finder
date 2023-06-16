@@ -12,61 +12,94 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "User")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
 
-    @Column(name = "username", unique = true)
-    private String username;
+	@Column(name = "username", unique = true)
+	private String username;
 
-    @Column(name = "password")
-    private String password;
+	@Column(name = "password")
+	private String password;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Passenger passenger;
+	@Column(name = "First_Name")
+	private String fname;
 
-    // Constructors, getters, and setters
+	@Column(name = "Last_Name")
+	private String lname;
 
-    public User() {
-    }
+	@Column(name = "Amount_in_Wallet")
+	private int walletAmmount;
 
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Passenger passenger;
 
-    // Getters and setters
+	// Constructors, getters, and setters
 
-    public int getId() {
-        return id;
-    }
+	public User() {
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public User(String username, String password, String fname, String lname, int walletAmmount) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.fname = fname;
+		this.lname = lname;
+		this.walletAmmount = walletAmmount;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	// Getters and setters
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getFname() {
+		return fname;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
 
-    public Passenger getPassenger() {
-        return passenger;
-    }
+	public String getLname() {
+		return lname;
+	}
 
-    public void setPassenger(Passenger passenger) {
-        this.passenger = passenger;
-    }
+	public void setLname(String lname) {
+		this.lname = lname;
+	}
+
+	public int getWalletAmmount() {
+		return walletAmmount;
+	}
+
+	public void setWalletAmmount(int walletAmmount) {
+		this.walletAmmount = walletAmmount;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Passenger getPassenger() {
+		return passenger;
+	}
+
+	public void setPassenger(Passenger passenger) {
+		this.passenger = passenger;
+	}
 }

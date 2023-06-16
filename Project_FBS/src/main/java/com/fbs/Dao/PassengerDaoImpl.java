@@ -21,36 +21,41 @@ public class PassengerDaoImpl implements PassengerDAO {
 	@Override
 	public void login(String email, String password) throws LoginException {
 		EntityManager em = null;
-		EntityTransaction et = null;
 		try {
 			em = EMUtils.connect();
-			et = em.getTransaction();
-
-			et.begin();
 			String q = "SELECT u.id FROM User u WHERE u.username = :email AND u.password = :password";
 			Query query = em.createQuery(q);
 			query.setParameter("email", email);
 			query.setParameter("password", password);
-			List<Integer> listInt = (List<Integer>)query.getResultList();
-			if (listInt.size() != 0) {
+			Integer userId = (Integer) query.getSingleResult();
+			if (userId != null) {
 				System.out.println("Logged In Successfully.");
+				User loggedInUser = em.find(User.class, userId);
+				System.out.println("Logged-in User Details:");
+				System.out.println("User ID: " + loggedInUser.getId());
+				System.out.println("Username: " + loggedInUser.getUsername());
+				System.out.println("Password: " + loggedInUser.getPassword());
+				System.out.println("First Name : " + loggedInUser.getFname());
+				System.out.println("Last Name : " + loggedInUser.getLname());
+				System.out.println("Ammount in wallet : " + loggedInUser.getWalletAmmount());
 				System.out.println("------------------------------------------------");
 				UserUI.processUserMenuOption(new Scanner(System.in));
 			} else {
 				System.out.println("User does not exist, Please signup.");
 				MainUI.main(new String[0]);
 			}
-			et.commit();
 
 		} catch (Exception e) {
-			throw new LoginException("Something went wrong, try again later.");
+			e.printStackTrace();
+			// System.out.println("Login failed: " + e.getMessage());
+			// throw new LoginException("Something went wrong, try again later.");
 		} finally {
 			em.close();
 		}
 	}
 
 	@Override
-	public void signup(String email, String password) throws LoginException {
+	public void signup(String email, String password, String fname, String lname, int amt) throws LoginException {
 		EntityManager em = null;
 		EntityTransaction et = null;
 		try {
@@ -58,7 +63,7 @@ public class PassengerDaoImpl implements PassengerDAO {
 			et = em.getTransaction();
 
 			et.begin();
-			User u1 = new User(email, password);
+			User u1 = new User(fname, password, fname, lname, amt);
 			em.persist(u1);
 			et.commit();
 

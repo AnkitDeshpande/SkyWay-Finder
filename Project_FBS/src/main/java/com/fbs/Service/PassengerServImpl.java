@@ -18,9 +18,9 @@ public class PassengerServImpl implements PassengerService {
 	}
 
 	@Override
-	public void signup(String email, String password) throws LoginException {
+	public void signup(String email, String password, String fname, String lname, int amt) throws LoginException {
 		PassengerDAO p1 = new PassengerDaoImpl();
-		p1.signup(email, password);
+		p1.signup(email, password,fname,lname,amt);
 	}
 
 	@Override

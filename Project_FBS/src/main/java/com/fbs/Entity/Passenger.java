@@ -5,11 +5,14 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -25,43 +28,53 @@ public class Passenger {
 	private String phoneNumber;
 	private LocalDate dateOfBirth;
 	private String nationality;
+	private String source;
+	private String destination;
+
+	@ManyToOne
+	@JoinColumn(name = "flight_id")
+	private Flight flight;
 
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(mappedBy = "passenger")
-	private Set<Booking> bookings;
+	@OneToMany(mappedBy = "passenger", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Booking> bookings = new HashSet<>();
 
-	// Constructors, getters, and setters
+	// Constructors
 
 	public Passenger() {
-		this.bookings = new HashSet<>();
 	}
 
-	public Passenger(String name, String phoneNumber, LocalDate dateOfBirth, String nationality, User user,
-			Set<Booking> bookings) {
+
+
+	public Passenger(String name, String phoneNumber, LocalDate dateOfBirth, String nationality, String source,
+			String destination, Flight flight, User user) {
 		super();
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.dateOfBirth = dateOfBirth;
 		this.nationality = nationality;
+		this.source = source;
+		this.destination = destination;
+		this.flight = flight;
 		this.user = user;
 		this.bookings = new HashSet<>();
 	}
 
-	// Getters and setters
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+	// Getters and Setters
 
 	public Long getId() {
 		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPhoneNumber() {
@@ -88,12 +101,38 @@ public class Passenger {
 		this.nationality = nationality;
 	}
 
-	public String getName() {
-		return name;
+	public String getSource() {
+		return source;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setSource(String source) {
+		this.source = source;
+	}
+
+	public String getDestination() {
+		return destination;
+	}
+
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+
+	public Flight getFlight() {
+		return flight;
+	}
+
+	public void setFlight(Flight flight) {
+		this.flight = flight;
+		this.source = flight.getSource();
+		this.destination = flight.getDestination();
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Set<Booking> getBookings() {

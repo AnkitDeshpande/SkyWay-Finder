@@ -38,6 +38,10 @@ public class Flight {
 	private String destination;
 	private LocalDateTime departureTime;
 	private LocalDateTime arrivalTime;
+	private int ePrice;
+	private int bPrice;
+	private int economySeats;
+	private int businessSeats;
 
 	// Constructors, getters, and setters
 
@@ -46,13 +50,17 @@ public class Flight {
 	}
 
 	public Flight(String flightNumber, Company company, String source, String destination, LocalDateTime departureTime,
-			LocalDateTime arrivalTime) {
+			LocalDateTime arrivalTime, int ePrice, int bPrice) {
 		this.flightNumber = flightNumber;
 		this.company = company;
 		this.source = source;
 		this.destination = destination;
 		this.departureTime = departureTime;
 		this.arrivalTime = arrivalTime;
+		this.ePrice = ePrice;
+		this.bPrice = bPrice;
+		this.economySeats = 100;       // Default value for economy seats
+		this.businessSeats = 30;      // Default value for business seats
 		this.bookings = new HashSet<>();
 	}
 
@@ -62,8 +70,36 @@ public class Flight {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public int getePrice() {
+		return ePrice;
+	}
+
+	public void setePrice(int ePrice) {
+		this.ePrice = ePrice;
+	}
+
+	public int getbPrice() {
+		return bPrice;
+	}
+
+	public void setbPrice(int bPrice) {
+		this.bPrice = bPrice;
+	}
+
+	public int getEconomySeats() {
+		return economySeats;
+	}
+
+	public void setEconomySeats(int economySeats) {
+		this.economySeats = economySeats;
+	}
+
+	public int getBusinessSeats() {
+		return businessSeats;
+	}
+
+	public void setBusinessSeats(int businessSeats) {
+		this.businessSeats = businessSeats;
 	}
 
 	public String getFlightNumber() {
@@ -126,9 +162,8 @@ public class Flight {
 
 	@Override
 	public String toString() {
-		return "Flight [id=" + id + ", flightNumber=" + flightNumber + ", source=" + source
-				+ ", destination=" + destination + ", departureTime=" + departureTime + ", arrivalTime=" + arrivalTime
-				+ "]";
+		return "Flight [id=" + id + ", flightNumber=" + flightNumber + ", source=" + source + ", destination="
+				+ destination + ", departureTime=" + departureTime + ", arrivalTime=" + arrivalTime + "]";
 	}
 
 	@Override

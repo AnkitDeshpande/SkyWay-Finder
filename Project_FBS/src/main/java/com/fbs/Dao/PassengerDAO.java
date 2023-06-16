@@ -9,7 +9,7 @@ import com.fbs.Exception.SomethingWentWrongException;
 
 public interface PassengerDAO {
 	void login(String email, String password) throws LoginException;
-	void signup(String email, String password) throws LoginException;
+	void signup(String email, String password, String fname, String lname, int amt) throws LoginException;
     void savePassenger(Passenger passenger) throws SomethingWentWrongException;
     void updatePassenger(Passenger passenger) throws NoRecordFoundException, SomethingWentWrongException;
     void deletePassenger(Passenger passenger) throws NoRecordFoundException, SomethingWentWrongException;
