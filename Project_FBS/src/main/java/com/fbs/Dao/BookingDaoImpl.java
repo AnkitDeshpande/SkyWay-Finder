@@ -22,7 +22,7 @@ import jakarta.persistence.Query;
 public class BookingDaoImpl implements BookingDAO {
 
 	@Override
-	public void saveBooking() throws SomethingWentWrongException {
+	public void saveBooking(Scanner sc) throws SomethingWentWrongException {
 		EntityManager em = null;
 		EntityTransaction et = null;
 		try {
@@ -30,8 +30,6 @@ public class BookingDaoImpl implements BookingDAO {
 			et = em.getTransaction();
 
 			et.begin();
-
-			Scanner sc = new Scanner(System.in);
 
 			System.out.println("Enter your user Id: ");
 			long id = sc.nextLong();
@@ -135,8 +133,8 @@ public class BookingDaoImpl implements BookingDAO {
 			em.persist(booking);
 
 			et.commit();
-
 			System.out.println("Booking Confirmed Successfully.");
+			System.out.println("Your passenger Id is : " + booking.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (et != null && et.isActive()) {
@@ -151,15 +149,42 @@ public class BookingDaoImpl implements BookingDAO {
 	}
 
 	@Override
-	public void deleteBooking(Booking booking) throws NoRecordFoundException, SomethingWentWrongException {
-		// TODO Auto-generated method stub
-
+	public void deleteBooking(Scanner sc) throws NoRecordFoundException, SomethingWentWrongException {
+		System.out.println("Enter booking id : ");
+		long id = sc.nextLong();
+		EntityManager em = null;
+		try {
+			em = EMUtils.connect();
+			em.getTransaction().begin();
+			Booking booking = em.find(Booking.class, id);
+			em.remove(booking);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new SomethingWentWrongException("Error while deleting booking", e);
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
 	}
 
 	@Override
-	public Booking getBookingById(int Id) throws NoRecordFoundException, SomethingWentWrongException {
-		// TODO Auto-generated method stub
-		return null;
+	public Booking getBookingById(int userId) throws NoRecordFoundException, SomethingWentWrongException {
+		try (EntityManager em = EMUtils.connect()) {
+			String queryString = "SELECT b FROM Booking b WHERE id = :id";
+			Query query = em.createQuery(queryString);
+			query.setParameter("id", userId);
+			Booking booking = (Booking) query.getSingleResult();
+			System.out.println();
+			if (booking == null) {
+				throw new NoRecordFoundException("Booking not found for the given user ID.");
+			}
+			return booking;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new SomethingWentWrongException("Error while retrieving booking by user ID", e);
+		}
 	}
 
 	@Override

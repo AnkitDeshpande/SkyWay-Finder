@@ -299,7 +299,7 @@ public class AdminUI {
 
 	public static void getFlightsByCompany(Scanner sc) {
 		System.out.println("Enter Company Id: ");
-		long id = new Scanner(System.in).nextLong();
+		long id = sc.nextLong();
 
 		FlightService f2 = new FlightServImpl();
 		Company c = EMUtils.connect().find(Company.class, id);
