@@ -16,6 +16,8 @@ public interface FlightDAO {
     Flight getFlightById(int flightId) throws NoRecordFoundException, SomethingWentWrongException;
     List<Flight> getAllFlights() throws SomethingWentWrongException;
     List<Flight> getFlightsByCompany(Company company) throws SomethingWentWrongException;
-    List<Flight> getFlightsByPassenger(Passenger passenger) throws SomethingWentWrongException;
-    List<Flight> filterFlightsByDepartureTime(LocalDateTime startTime, LocalDateTime endTime) throws SomethingWentWrongException, NoRecordFoundException;
+    Flight getFlightByFlightNumber(String flightNumber) throws SomethingWentWrongException, NoRecordFoundException;
+    List<Flight> filterFlightsByDepartureTime(String source, String destination) throws SomethingWentWrongException, NoRecordFoundException;
+	List<Flight> filterFlightsByDate(LocalDateTime startTime, LocalDateTime endTime) throws SomethingWentWrongException, NoRecordFoundException;
+	List<Flight> filterFlightsByPrice(int minPrice, int maxPrice) throws SomethingWentWrongException, NoRecordFoundException;
 }

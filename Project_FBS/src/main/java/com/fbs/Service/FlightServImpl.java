@@ -11,7 +11,7 @@ import com.fbs.Entity.Passenger;
 import com.fbs.Exception.NoRecordFoundException;
 import com.fbs.Exception.SomethingWentWrongException;
 
-public class FlightServImpl  implements FlightService{
+public class FlightServImpl implements FlightService {
 
 	@Override
 	public void saveFlight(Flight flight) throws SomethingWentWrongException {
@@ -50,16 +50,31 @@ public class FlightServImpl  implements FlightService{
 	}
 
 	@Override
-	public List<Flight> getFlightsByPassenger(Passenger passenger) throws SomethingWentWrongException {
+	public Flight getFlightByFlightNumber(String flightNumber)
+			throws SomethingWentWrongException, NoRecordFoundException {
 		FlightDAO f1 = new FlightDaoImpl();
-		return f1.getFlightsByPassenger(passenger);
+		return f1.getFlightByFlightNumber(flightNumber);
 	}
 
 	@Override
-	public List<Flight> filterFlightsByDepartureTime(LocalDateTime startTime, LocalDateTime endTime)
+	public List<Flight> filterFlightsByDepartureTime(String source, String destination)
 			throws SomethingWentWrongException, NoRecordFoundException {
 		FlightDAO f1 = new FlightDaoImpl();
-		return f1.filterFlightsByDepartureTime(startTime, endTime);
+		return f1.filterFlightsByDepartureTime(source, destination);
+	}
+
+	@Override
+	public List<Flight> filterFlightsByDate(LocalDateTime startTime, LocalDateTime endTime)
+			throws SomethingWentWrongException, NoRecordFoundException {
+		FlightDAO f1 = new FlightDaoImpl();
+		return f1.filterFlightsByDate(startTime, endTime);
+	}
+
+	@Override
+	public List<Flight> filterFlightsByPrice(int minPrice, int maxPrice)
+			throws SomethingWentWrongException, NoRecordFoundException {
+		FlightDAO f1 = new FlightDaoImpl();
+		return f1.filterFlightsByPrice(minPrice, maxPrice);
 	}
 
 }

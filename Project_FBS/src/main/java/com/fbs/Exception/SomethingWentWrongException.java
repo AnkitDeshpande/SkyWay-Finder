@@ -11,5 +11,9 @@ public class SomethingWentWrongException extends Exception {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
+
+	public SomethingWentWrongException(String string, Exception e) {
+		// TODO Auto-generated constructor stub
+	}
 	
 }

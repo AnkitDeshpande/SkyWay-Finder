@@ -2,11 +2,9 @@ package com.fbs.Dao;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Scanner;
 
 import com.fbs.Entity.Company;
 import com.fbs.Entity.Flight;
-import com.fbs.Entity.Passenger;
 import com.fbs.Exception.NoRecordFoundException;
 import com.fbs.Exception.SomethingWentWrongException;
 import com.fbs.Utility.EMUtils;
@@ -82,9 +80,9 @@ public class FlightDaoImpl implements FlightDAO {
 			et.commit();
 
 			if (deletedCount == 0) {
-	            throw new NoRecordFoundException("Flight not found with ID: " + id);
-	        }
-			
+				throw new NoRecordFoundException("Flight not found with ID: " + id);
+			}
+
 		} catch (Exception e) {
 			et.rollback();
 			System.out.println(e.getMessage());
@@ -122,7 +120,7 @@ public class FlightDaoImpl implements FlightDAO {
 	@Override
 	public List<Flight> getFlightsByCompany(Company company) throws SomethingWentWrongException {
 		try (EntityManager em = EMUtils.connect()) {
-			
+
 			String Q = "SELECT f FROM Flight f WHERE f.company.id = :id";
 			Query query = em.createQuery(Q);
 			query.setParameter("id", company.getId());
@@ -134,15 +132,80 @@ public class FlightDaoImpl implements FlightDAO {
 	}
 
 	@Override
-	public List<Flight> getFlightsByPassenger(Passenger passenger) throws SomethingWentWrongException {
-		// TODO Auto-generated method stub
-		return null;
+	public Flight getFlightByFlightNumber(String flightNumber)
+			throws SomethingWentWrongException, NoRecordFoundException {
+		try (EntityManager em = EMUtils.connect()) {
+			String queryString = "SELECT f FROM Flight f WHERE f.flightNumber = :flightNumber";
+			Query query = em.createQuery(queryString);
+			query.setParameter("flightNumber", flightNumber);
+			Flight flight = (Flight) query.getSingleResult();
+			if (flight == null) {
+				throw new NoRecordFoundException("No flight found with the given flight number");
+			}
+			return flight;
+		} catch (Exception e) {
+			throw new SomethingWentWrongException("Something went wrong while retrieving flight");
+		}
 	}
 
 	@Override
-	public List<Flight> filterFlightsByDepartureTime(LocalDateTime startTime, LocalDateTime endTime)
+	public List<Flight> filterFlightsByDepartureTime(String source, String destination)
 			throws SomethingWentWrongException, NoRecordFoundException {
-		// TODO Auto-generated method stub
+		try (EntityManager em = EMUtils.connect()) {
+			String q = "SELECT f FROM Flight f WHERE f.source = :source AND f.destination = :destination ORDER BY f.departureTime ASC";
+			Query query = em.createQuery(q);
+			query.setParameter("source", source);
+			query.setParameter("destination", destination);
+			List<Flight> flights = (List<Flight>) query.getResultList();
+
+			if (flights.isEmpty()) {
+				throw new NoRecordFoundException("No flights found for the given source and destination.");
+			}
+
+			return flights;
+		} catch (Exception e) {
+			throw new SomethingWentWrongException("Something went wrong while filtering flights by departure time.");
+		}
+	}
+
+	@Override
+	public List<Flight> filterFlightsByDate(LocalDateTime startTime, LocalDateTime endTime)
+			throws SomethingWentWrongException, NoRecordFoundException {
+		try (EntityManager em = EMUtils.connect()) {
+			String q = "SELECT f FROM Flight f WHERE f.departureTime >= :startTime AND f.departureTime <= :endTime ORDER BY f.departureTime ASC";
+			Query query = em.createQuery(q);
+			query.setParameter("startTime", startTime);
+			query.setParameter("endTime", endTime);
+			List<Flight> flights = query.getResultList();
+
+			if (flights.isEmpty()) {
+				throw new NoRecordFoundException("No flights found for the given date range.");
+			}
+
+			return flights;
+		} catch (Exception e) {
+			throw new SomethingWentWrongException("Something went wrong while filtering flights by date.");
+		}
+	}
+
+	@Override
+	public List<Flight> filterFlightsByPrice(int minPrice, int maxPrice)
+			throws SomethingWentWrongException, NoRecordFoundException {
+		try {
+			EntityManager em = EMUtils.connect();
+			Query query = em.createQuery("SELECT f FROM Flight f WHERE f.ePrice BETWEEN :minPrice AND :maxPrice");
+			query.setParameter("minPrice", minPrice);
+			query.setParameter("maxPrice", maxPrice);
+			List<Flight> flights = query.getResultList();
+			em.close();
+			if (flights.isEmpty()) {
+				throw new NoRecordFoundException("No flights found within the specified price range.");
+			}
+			return flights;
+		} catch (Exception e) {
+			//throw new SomethingWentWrongException("Something went wrong while filtering flights by price.");
+			System.out.println(e.getMessage());
+		}
 		return null;
 	}
 

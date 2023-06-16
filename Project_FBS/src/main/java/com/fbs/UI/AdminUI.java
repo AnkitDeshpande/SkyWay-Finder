@@ -147,21 +147,28 @@ public class AdminUI {
 
 		sc.nextLine();
 
-		System.out.println("Enter departure time (yyyy-MM-dd HH:mm:ss):");
-		String departureTimeString = sc.nextLine();
-		LocalDateTime departureTime = LocalDateTime.parse(departureTimeString,
-				DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
 		System.out.println("Enter arrival time (yyyy-MM-dd HH:mm:ss):");
 		String arrivalTimeString = sc.nextLine();
 		LocalDateTime arrivalTime = LocalDateTime.parse(arrivalTimeString,
 				DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
+		System.out.println("Enter departure time (yyyy-MM-dd HH:mm:ss):");
+		String departureTimeString = sc.nextLine();
+		LocalDateTime departureTime = LocalDateTime.parse(departureTimeString,
+				DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+		System.out.println("Enter flight Economy seat price:");
+		int eprice = sc.nextInt();
+
+		System.out.println("Enter flight Economy seat price:");
+		int bprice = sc.nextInt();
+
 		Company company = EMUtils.connect().find(Company.class, companyId);
 
 		if (company != null) {
 			try {
-				Flight f1 = new Flight(flightNumber, company, source, destination, departureTime, arrivalTime);
+				Flight f1 = new Flight(flightNumber, company, source, destination, departureTime, arrivalTime, eprice,
+						bprice);
 				FlightService f2 = new FlightServImpl();
 				f2.saveFlight(f1);
 				System.out.println("Flight Added to Company");
@@ -188,20 +195,27 @@ public class AdminUI {
 
 		sc.nextLine();
 
-		System.out.println("Enter departure time (yyyy-MM-dd HH:mm:ss):");
-		String departureTimeString = sc.nextLine();
-		LocalDateTime departureTime = LocalDateTime.parse(departureTimeString,
-				DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
 		System.out.println("Enter arrival time (yyyy-MM-dd HH:mm:ss):");
 		String arrivalTimeString = sc.nextLine();
 		LocalDateTime arrivalTime = LocalDateTime.parse(arrivalTimeString,
 				DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
+		System.out.println("Enter departure time (yyyy-MM-dd HH:mm:ss):");
+		String departureTimeString = sc.nextLine();
+		LocalDateTime departureTime = LocalDateTime.parse(departureTimeString,
+				DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+		System.out.println("Enter flight Economy seat price:");
+		int eprice = sc.nextInt();
+
+		System.out.println("Enter flight Economy seat price:");
+		int bprice = sc.nextInt();
+
 		Company company = EMUtils.connect().find(Company.class, companyId);
 		if (company != null) {
 			try {
-				Flight f1 = new Flight(flightNumber, company, source, destination, departureTime, arrivalTime);
+				Flight f1 = new Flight(flightNumber, company, source, destination, departureTime, arrivalTime, eprice,
+						bprice);
 				FlightService f2 = new FlightServImpl();
 				f2.updateFlight(f1);
 				System.out.println("Flight Added to Company");
@@ -220,6 +234,7 @@ public class AdminUI {
 		try {
 			Flight flight = f2.getFlightById(f_Id);
 			if (flight != null) {
+				System.out.println("---------------------------------");
 				System.out.println("Flight Details:");
 				System.out.println("Flight Number: " + flight.getFlightNumber());
 				System.out.println("Company: " + flight.getCompany().getName());
@@ -227,6 +242,10 @@ public class AdminUI {
 				System.out.println("Destination: " + flight.getDestination());
 				System.out.println("Departure Time: " + flight.getDepartureTime());
 				System.out.println("Arrival Time: " + flight.getArrivalTime());
+				System.out.println("Economy Seats Available: " + flight.getEconomySeats());
+				System.out.println("Business Seats Available: " + flight.getBusinessSeats());
+				System.out.println("Economy Seat Price: " + flight.getePrice());
+				System.out.println("Business Seat Price: " + flight.getbPrice());
 				System.out.println("---------------------------------");
 			} else {
 				System.out.println("Flight not found with ID: " + f_Id);
@@ -263,6 +282,10 @@ public class AdminUI {
 					System.out.println("Destination: " + flight.getDestination());
 					System.out.println("Departure Time: " + flight.getDepartureTime());
 					System.out.println("Arrival Time: " + flight.getArrivalTime());
+					System.out.println("Economy Seats Available: " + flight.getEconomySeats());
+					System.out.println("Business Seats Available: " + flight.getBusinessSeats());
+					System.out.println("Economy Seat Price: " + flight.getePrice());
+					System.out.println("Business Seat Price: " + flight.getbPrice());
 					System.out.println("---------------------------------");
 				}
 
@@ -284,6 +307,7 @@ public class AdminUI {
 			List<Flight> flights = f2.getFlightsByCompany(c);
 			if (flights != null) {
 				for (Flight flight : flights) {
+					System.out.println("---------------------------------");
 					System.out.println("Flight Details:");
 					System.out.println("Flight Number: " + flight.getFlightNumber());
 					System.out.println("Company: " + flight.getCompany().getName());
@@ -303,7 +327,7 @@ public class AdminUI {
 	}
 
 	public static void getFlightsByPassenger(Scanner sc) {
-		
+
 	}
 
 	public static void getAllUsers() {
