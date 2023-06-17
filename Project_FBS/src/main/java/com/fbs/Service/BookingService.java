@@ -15,6 +15,4 @@ public interface BookingService {
 	void deleteBooking(Scanner sc) throws NoRecordFoundException, SomethingWentWrongException;
 
 	Booking getBookingById(int bookingId) throws NoRecordFoundException, SomethingWentWrongException;
-
-	Booking getBookingsByPassenger(long id) throws SomethingWentWrongException;
 }

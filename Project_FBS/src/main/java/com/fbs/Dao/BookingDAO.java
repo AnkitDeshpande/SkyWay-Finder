@@ -13,5 +13,4 @@ public interface BookingDAO {
 
 	Booking getBookingById(int bookingId) throws NoRecordFoundException, SomethingWentWrongException;
 
-	Booking getBookingsByPassenger(long id) throws SomethingWentWrongException;
 }

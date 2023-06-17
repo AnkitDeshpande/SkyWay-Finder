@@ -107,7 +107,6 @@ public class MainUI {
 		System.out.println("2. User login");
 		System.out.println("3. Not a user? Signup");
 		System.out.println("4. Exit");
-
 		System.out.print("Enter your choice: ");
 		int choice = 0;
 		

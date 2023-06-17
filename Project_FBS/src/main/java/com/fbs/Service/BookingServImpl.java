@@ -29,10 +29,4 @@ public class BookingServImpl implements BookingService {
 		return b1.getBookingById(bookingId);
 	}
 
-	@Override
-	public Booking getBookingsByPassenger(long id) throws SomethingWentWrongException {
-		BookingDAO b1 = new BookingDaoImpl();
-		return b1.getBookingsByPassenger(id);
-	}
-
 }
