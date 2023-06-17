@@ -34,6 +34,7 @@ public class UserUI {
 		PassengerService p1 = new PassengerServImpl();
 		try {
 			p1.login(email, password);
+			processUserMenuOption(sc);
 		} catch (LoginException e) {
 			e.printStackTrace();
 		}
@@ -55,9 +56,9 @@ public class UserUI {
 		PassengerService p1 = new PassengerServImpl();
 		try {
 			p1.signup(email, password, f_name, l_name, amt);
+			System.out.println("---------------------------------");
 			System.out.println("User Signed up successfully.");
-			System.out.println("------------------------------");
-			MainUI.main(new String[0]);
+			System.out.println("---------------------------------");
 		} catch (LoginException e) {
 			e.printStackTrace();
 		}
@@ -65,13 +66,14 @@ public class UserUI {
 
 	public static void searchFlightsByFlightNumber(Scanner sc) {
 		System.out.println("Enter Flight Number :");
-		String flightNumber = sc.next();
+		long flightNumber = sc.nextLong();
 		FlightService f2 = new FlightServImpl();
 		try {
 			Flight flight = f2.getFlightByFlightNumber(flightNumber);
+			System.out.println("Flight Details:");
 			if (flight != null) {
 				System.out.println("---------------------------------");
-				System.out.println("Flight Details:");
+				System.out.println();
 				System.out.println("Flight Number: " + flight.getFlightNumber());
 				System.out.println("Company: " + flight.getCompany().getName());
 				System.out.println("Source: " + flight.getSource());
@@ -82,6 +84,7 @@ public class UserUI {
 				System.out.println("Business Seats Available: " + flight.getBusinessSeats());
 				System.out.println("Economy Seat Price: " + flight.getePrice());
 				System.out.println("Business Seat Price: " + flight.getbPrice());
+				System.out.println();
 				System.out.println("---------------------------------");
 			}
 		} catch (SomethingWentWrongException | NoRecordFoundException e) {
@@ -94,9 +97,10 @@ public class UserUI {
 		try {
 			List<Flight> flights = f2.getAllFlights();
 			if (flights != null) {
+				System.out.println("Flight Details:");
 				for (Flight flight : flights) {
 					System.out.println("---------------------------------");
-					System.out.println("Flight Details:");
+					System.out.println();
 					System.out.println("Flight Number: " + flight.getFlightNumber());
 					System.out.println("Company: " + flight.getCompany().getName());
 					System.out.println("Source: " + flight.getSource());
@@ -107,6 +111,7 @@ public class UserUI {
 					System.out.println("Business Seats Available: " + flight.getBusinessSeats());
 					System.out.println("Economy Seat Price: " + flight.getePrice());
 					System.out.println("Business Seat Price: " + flight.getbPrice());
+					System.out.println();
 					System.out.println("---------------------------------");
 				}
 
@@ -132,9 +137,10 @@ public class UserUI {
 		try {
 			List<Flight> flights = f1.filterFlightsByDate(startTime, endTime);
 			if (!flights.isEmpty()) {
+				System.out.println("Flight Details:");
 				for (Flight flight : flights) {
 					System.out.println("---------------------------------");
-					System.out.println("Flight Details:");
+					System.out.println();
 					System.out.println("Flight Number: " + flight.getFlightNumber());
 					System.out.println("Company: " + flight.getCompany().getName());
 					System.out.println("Source: " + flight.getSource());
@@ -145,6 +151,7 @@ public class UserUI {
 					System.out.println("Business Seats Available: " + flight.getBusinessSeats());
 					System.out.println("Economy Seat Price: " + flight.getePrice());
 					System.out.println("Business Seat Price: " + flight.getbPrice());
+					System.out.println();
 					System.out.println("---------------------------------");
 				}
 			} else {
@@ -166,9 +173,10 @@ public class UserUI {
 		try {
 			List<Flight> flights = f1.filterFlightsByPrice(minPrice, maxPrice);
 			if (!flights.isEmpty()) {
+				System.out.println("Flight Details:");
 				for (Flight flight : flights) {
 					System.out.println("---------------------------------");
-					System.out.println("Flight Details:");
+					System.out.println();
 					System.out.println("Flight Number: " + flight.getFlightNumber());
 					System.out.println("Company: " + flight.getCompany().getName());
 					System.out.println("Source: " + flight.getSource());
@@ -179,6 +187,7 @@ public class UserUI {
 					System.out.println("Business Seats Available: " + flight.getBusinessSeats());
 					System.out.println("Economy Seat Price: " + flight.getePrice());
 					System.out.println("Business Seat Price: " + flight.getbPrice());
+					System.out.println();
 					System.out.println("---------------------------------");
 				}
 			} else {
@@ -198,8 +207,10 @@ public class UserUI {
 		try {
 			List<Flight> flights = f1.filterFlightsByDepartureTime(source, destination);
 			if (flights != null) {
+				System.out.println("Flight Details:");
 				for (Flight flight : flights) {
-					System.out.println("Flight Details:");
+					System.out.println("---------------------------------");
+					System.out.println();
 					System.out.println("Flight Number: " + flight.getFlightNumber());
 					System.out.println("Company: " + flight.getCompany().getName());
 					System.out.println("Source: " + flight.getSource());
@@ -210,6 +221,7 @@ public class UserUI {
 					System.out.println("Business Seats Available: " + flight.getBusinessSeats());
 					System.out.println("Economy Seat Price: " + flight.getePrice());
 					System.out.println("Business Seat Price: " + flight.getbPrice());
+					System.out.println();
 					System.out.println("---------------------------------");
 				}
 			}
@@ -223,7 +235,6 @@ public class UserUI {
 		try {
 			b1.saveBooking(sc);
 		} catch (SomethingWentWrongException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -251,7 +262,9 @@ public class UserUI {
 		BookingService b = new BookingServImpl();
 		try {
 			b.deleteBooking(sc);
+			System.out.println("---------------------------------");
 			System.out.println("Booking Cancelled. ");
+			System.out.println("---------------------------------");
 		} catch (NoRecordFoundException | SomethingWentWrongException e) {
 			e.printStackTrace();
 		}

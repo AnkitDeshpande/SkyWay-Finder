@@ -153,6 +153,7 @@ public class BookingDaoImpl implements BookingDAO {
 		System.out.println("Enter booking id : ");
 		long id = sc.nextLong();
 		EntityManager em = null;
+		EntityTransaction et = null;
 		try {
 			em = EMUtils.connect();
 			em.getTransaction().begin();
@@ -173,8 +174,6 @@ public class BookingDaoImpl implements BookingDAO {
 	public Booking getBookingById(int userId) throws NoRecordFoundException, SomethingWentWrongException {
 		try (EntityManager em = EMUtils.connect()) {
 			Booking booking = em.find(Booking.class, userId);
-			System.out.println(booking);
-			System.out.println();
 			if (booking == null) {
 				throw new NoRecordFoundException("Booking not found for the given user ID.");
 			}

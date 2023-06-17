@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import com.fbs.Entity.Company;
 import com.fbs.Entity.Flight;
+import com.fbs.Entity.User;
 import com.fbs.Exception.NoRecordFoundException;
 import com.fbs.Exception.SomethingWentWrongException;
 import com.fbs.Service.CompanyServImpl;
@@ -14,6 +15,10 @@ import com.fbs.Service.CompanyService;
 import com.fbs.Service.FlightServImpl;
 import com.fbs.Service.FlightService;
 import com.fbs.Utility.EMUtils;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Query;
 
 public class AdminUI {
 
@@ -68,7 +73,9 @@ public class AdminUI {
 		try {
 			CompanyService c1 = new CompanyServImpl();
 			c1.updateCompany(company);
+			System.out.println("---------------------------------");
 			System.out.println("company Updated Successfully");
+			System.out.println("---------------------------------");
 		} catch (NoRecordFoundException | SomethingWentWrongException e) {
 			e.printStackTrace();
 		}
@@ -81,7 +88,9 @@ public class AdminUI {
 		CompanyService c1 = new CompanyServImpl();
 		try {
 			c1.deleteCompany(company);
-			System.out.println("Comapnay Deleted Successfully");
+			System.out.println("---------------------------------");
+			System.out.println("Company Deleted Successfully");
+			System.out.println("---------------------------------");
 		} catch (NoRecordFoundException | SomethingWentWrongException e) {
 			e.printStackTrace();
 		}
@@ -94,6 +103,7 @@ public class AdminUI {
 		try {
 			Company company = c1.getCompanyById(companyId);
 			if (company != null) {
+				System.out.println("---------------------------------");
 				System.out.println("Company ID: " + company.getId());
 				System.out.println("Name: " + company.getName());
 				System.out.println("Contact Number: " + company.getContactNumber());
@@ -116,8 +126,10 @@ public class AdminUI {
 			if (companies.isEmpty()) {
 				System.out.println("No companies found.");
 			} else {
+				System.out.println("---------------------------------");
 				System.out.println("List of companies:");
 				for (Company company : companies) {
+					System.out.println("---------------------------------");
 					System.out.println("Company ID: " + company.getId());
 					System.out.println("Name: " + company.getName());
 					System.out.println("Contact Number: " + company.getContactNumber());
@@ -171,7 +183,9 @@ public class AdminUI {
 						bprice);
 				FlightService f2 = new FlightServImpl();
 				f2.saveFlight(f1);
+				System.out.println("---------------------------------");
 				System.out.println("Flight Added to Company");
+				System.out.println("---------------------------------");
 			} catch (SomethingWentWrongException e) {
 				e.printStackTrace();
 			}
@@ -183,6 +197,9 @@ public class AdminUI {
 	public static void updateFlight(Scanner sc) {
 		System.out.println("Enter company ID:");
 		int companyId = sc.nextInt();
+
+		System.out.println("Enter the flight id :");
+		long id = sc.nextLong();
 
 		System.out.println("Enter flight number:");
 		String flightNumber = sc.next();
@@ -217,8 +234,10 @@ public class AdminUI {
 				Flight f1 = new Flight(flightNumber, company, source, destination, departureTime, arrivalTime, eprice,
 						bprice);
 				FlightService f2 = new FlightServImpl();
-				f2.updateFlight(f1);
-				System.out.println("Flight Added to Company");
+				f2.updateFlight(f1, id);
+				System.out.println("---------------------------------");
+				System.out.println("Flight Updated successfully.");
+				System.out.println("---------------------------------");
 			} catch (SomethingWentWrongException | NoRecordFoundException e) {
 				e.printStackTrace();
 			}
@@ -274,8 +293,10 @@ public class AdminUI {
 		try {
 			List<Flight> flights = f2.getAllFlights();
 			if (flights != null) {
+				System.out.println("Flight Details:");
 				for (Flight flight : flights) {
-					System.out.println("Flight Details:");
+					System.out.println("---------------------------------");
+					System.out.println();
 					System.out.println("Flight Number: " + flight.getFlightNumber());
 					System.out.println("Company: " + flight.getCompany().getName());
 					System.out.println("Source: " + flight.getSource());
@@ -286,6 +307,7 @@ public class AdminUI {
 					System.out.println("Business Seats Available: " + flight.getBusinessSeats());
 					System.out.println("Economy Seat Price: " + flight.getePrice());
 					System.out.println("Business Seat Price: " + flight.getbPrice());
+					System.out.println();
 					System.out.println("---------------------------------");
 				}
 
@@ -306,15 +328,17 @@ public class AdminUI {
 		try {
 			List<Flight> flights = f2.getFlightsByCompany(c);
 			if (flights != null) {
+				System.out.println("Flight Details:");
 				for (Flight flight : flights) {
 					System.out.println("---------------------------------");
-					System.out.println("Flight Details:");
+					System.out.println();
 					System.out.println("Flight Number: " + flight.getFlightNumber());
 					System.out.println("Company: " + flight.getCompany().getName());
 					System.out.println("Source: " + flight.getSource());
 					System.out.println("Destination: " + flight.getDestination());
 					System.out.println("Departure Time: " + flight.getDepartureTime());
 					System.out.println("Arrival Time: " + flight.getArrivalTime());
+					System.out.println();
 					System.out.println("---------------------------------");
 				}
 
@@ -326,12 +350,37 @@ public class AdminUI {
 		}
 	}
 
-	public static void getFlightsByPassenger(Scanner sc) {
+	public static void getAllUsers() throws SomethingWentWrongException {
+		EntityManager em = EMUtils.connect();
+		EntityTransaction tx = em.getTransaction();
+		try {
+			tx.begin();
+			String Q = "SELECT u FROM User u";
+			Query query = em.createQuery(Q);
+			List<User> users = (List<User>) query.getResultList();
+			tx.commit();
+			if (users != null) {
+				System.out.println("Flight Details:");
+				for (User user : users) {
+					System.out.println("---------------------------------");
+					System.out.println();
+					System.out.println("User Id : " + user.getId());
+					System.out.println("Name : " + user.getFname() + " "+ user.getLname());
+					System.out.println("User handle : " + user.getUsername());
+					System.out.println("Handle password: " + user.getPassword());
+					System.out.println("Amount in wallet : " + user.getWalletAmmount());
+					System.out.println();
+					System.out.println("---------------------------------");
+				}
 
+			} else {
+				System.out.println("Flights not found");
+			}
+		} catch (Exception e) {
+			tx.rollback();
+			throw new SomethingWentWrongException("Something went wrong while retrieving company");
+		} finally {
+			em.close();
+		}
 	}
-
-	public static void getAllUsers() {
-
-	}
-
 }

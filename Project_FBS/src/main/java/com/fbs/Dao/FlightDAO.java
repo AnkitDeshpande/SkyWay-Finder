@@ -11,12 +11,12 @@ import com.fbs.Exception.SomethingWentWrongException;
 
 public interface FlightDAO {
     void saveFlight(Flight flight) throws SomethingWentWrongException;
-    void updateFlight(Flight flight) throws NoRecordFoundException, SomethingWentWrongException;
+    void updateFlight(Flight flight, long id) throws NoRecordFoundException, SomethingWentWrongException;
     void deleteFlight(long flight) throws NoRecordFoundException, SomethingWentWrongException;
     Flight getFlightById(int flightId) throws NoRecordFoundException, SomethingWentWrongException;
     List<Flight> getAllFlights() throws SomethingWentWrongException;
     List<Flight> getFlightsByCompany(Company company) throws SomethingWentWrongException;
-    Flight getFlightByFlightNumber(String flightNumber) throws SomethingWentWrongException, NoRecordFoundException;
+    Flight getFlightByFlightNumber(long flightNumber) throws SomethingWentWrongException, NoRecordFoundException;
     List<Flight> filterFlightsByDepartureTime(String source, String destination) throws SomethingWentWrongException, NoRecordFoundException;
 	List<Flight> filterFlightsByDate(LocalDateTime startTime, LocalDateTime endTime) throws SomethingWentWrongException, NoRecordFoundException;
 	List<Flight> filterFlightsByPrice(int minPrice, int maxPrice) throws SomethingWentWrongException, NoRecordFoundException;

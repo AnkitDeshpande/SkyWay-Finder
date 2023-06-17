@@ -30,7 +30,7 @@ public class Flight {
 	@JoinColumn(name = "company_id")
 	private Company company;
 
-	@OneToMany(mappedBy = "flight", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "flight", fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<Booking> bookings;
 
 	// Other attributes

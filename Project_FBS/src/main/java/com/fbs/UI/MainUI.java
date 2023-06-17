@@ -3,16 +3,17 @@ package com.fbs.UI;
 import java.util.Scanner;
 
 import com.fbs.Enums.AdminCredentials;
+import com.fbs.Exception.SomethingWentWrongException;
 
 public class MainUI {
-	
+
 	static void adminLogin(Scanner sc) {
 
 		System.out.print("Enter admin username: ");
 		String username = sc.next();
 
 		System.out.print("Enter admin password: ");
-	
+
 		String password = sc.next();
 
 		if (username.equals(AdminCredentials.USERNAME.getValue())
@@ -25,78 +26,79 @@ public class MainUI {
 			System.out.println("Invalid username or password.");
 		}
 	}
-	
+
 	static void adminOperations() {
-	    System.out.println("1. Add a company");
-	    System.out.println("2. Update Company.");
-	    System.out.println("3. Delete Company");
-	    System.out.println("4. View Company by ID");
-	    System.out.println("5. View All companies");
-	    System.out.println("6. Add a Flight");
-	    System.out.println("7. Update a Flight");
-	    System.out.println("8. Delete a Flight");
-	    System.out.println("9. get a Flight by Id");
-	    System.out.println("10. View All Flights");
-	    System.out.println("11. Get flights by company");
-	    System.out.println("12. Get flights by Passenger");
-	    System.out.println("13. Get all Users");
-	    System.out.println("0. Logout");
+		System.out.println("1. Add a company");
+		System.out.println("2. Update Company.");
+		System.out.println("3. Delete Company");
+		System.out.println("4. View Company by ID");
+		System.out.println("5. View All companies");
+		System.out.println("6. Add a Flight");
+		System.out.println("7. Update a Flight");
+		System.out.println("8. Delete a Flight");
+		System.out.println("9. get a Flight by Id");
+		System.out.println("10. View All Flights");
+		System.out.println("11. Get flights by company");
+		System.out.println("12. Get all Users");
+		System.out.println("0. Logout");
 	}
 
 	static void adminMenu(Scanner sc) {
-	    int choice = 0;
-	    do {
-	        adminOperations();
-	        System.out.print("Enter selection: ");
-	        choice = sc.nextInt();
-	        switch (choice) {
-	            case 1:
-	                AdminUI.addCompany(sc);
-	                break;
-	            case 2:
-	                AdminUI.updateCompany(sc);
-	                break;
-	            case 3:
-	                AdminUI.deletecompany(sc);
-	                break;
-	            case 4:
-	                AdminUI.viewCompanyById(sc);
-	                break;
-	            case 5:
-	                AdminUI.viewAllCompanies();
-	                break;
-	            case 6:
-	                AdminUI.addFlight(sc);
-	                break;
-	            case 7:
-	                AdminUI.updateFlight(sc);
-	                break;
-	            case 8:
-	                AdminUI.deleteFlight(sc);
-	                break;
-	            case 9:AdminUI.getFlightById(sc);
-	            	break;
-	            case 10:
-	                AdminUI.viewAllFlights();
-	                break;
-	            case 11:
-	            	AdminUI.getFlightsByCompany(sc);
-	                break;
-	            case 12:
-	            	AdminUI.getFlightsByPassenger(sc);
-	            	break;
-	            case 13:
-	            	AdminUI.getAllUsers();
-	            	break;
-	            case 0:
-	                System.out.println("Bye Bye Admin");
-	                break;
-	            default:
-	                System.out.println("Invalid Selection, try again");
-    		}
-    	}while(choice != 0);	
-	    System.out.println("-----------------------------------------------------------------------------");
-	    main(new String[0]);
+		int choice = 0;
+		do {
+			adminOperations();
+			System.out.print("Enter selection: ");
+			choice = sc.nextInt();
+			switch (choice) {
+			case 1:
+				AdminUI.addCompany(sc);
+				break;
+			case 2:
+				AdminUI.updateCompany(sc);
+				break;
+			case 3:
+				AdminUI.deletecompany(sc);
+				break;
+			case 4:
+				AdminUI.viewCompanyById(sc);
+				break;
+			case 5:
+				AdminUI.viewAllCompanies();
+				break;
+			case 6:
+				AdminUI.addFlight(sc);
+				break;
+			case 7:
+				AdminUI.updateFlight(sc);
+				break;
+			case 8:
+				AdminUI.deleteFlight(sc);
+				break;
+			case 9:
+				AdminUI.getFlightById(sc);
+				break;
+			case 10:
+				AdminUI.viewAllFlights();
+				break;
+			case 11:
+				AdminUI.getFlightsByCompany(sc);
+				break;
+			case 12:
+				try {
+					AdminUI.getAllUsers();
+				} catch (SomethingWentWrongException e) {
+					e.printStackTrace();
+				}
+				break;
+			case 0:
+				System.out.println("Bye Bye Admin");
+				break;
+			default:
+				System.out.println("Invalid Selection, try again");
+			}
+		} while (choice != 0);
+		System.out.println("-----------------------------------------------------------------------------");
+		main(new String[0]);
 	}
 
 	public static void main(String[] args) {
@@ -109,13 +111,13 @@ public class MainUI {
 		System.out.println("4. Exit");
 		System.out.print("Enter your choice: ");
 		int choice = 0;
-		
+
 		do {
 			choice = sc.nextInt();
 			switch (choice) {
 			case 1:
 				System.out.println("Admin login selected.");
-					adminLogin(sc);
+				adminLogin(sc);
 				break;
 			case 2:
 				System.out.println("User login selected.");
@@ -131,11 +133,12 @@ public class MainUI {
 			default:
 				System.out.println("Invalid choice. Enter choice between 1-4");
 			}
-			
+
 			System.out.println("-----------------------------------------------------------------------------");
-		} while (choice!=0);
+		} while (choice != 0);
 
 		sc.close();
+
 	}
 
 }

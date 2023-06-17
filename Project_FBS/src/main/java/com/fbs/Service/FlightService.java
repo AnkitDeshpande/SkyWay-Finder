@@ -12,7 +12,7 @@ import com.fbs.Exception.SomethingWentWrongException;
 public interface FlightService {
 	void saveFlight(Flight flight) throws SomethingWentWrongException;
 
-	void updateFlight(Flight flight) throws NoRecordFoundException, SomethingWentWrongException;
+	void updateFlight(Flight flight, long id) throws NoRecordFoundException, SomethingWentWrongException;
 
 	void deleteFlight(long flightId) throws NoRecordFoundException, SomethingWentWrongException;
 
@@ -22,7 +22,7 @@ public interface FlightService {
 
 	List<Flight> getFlightsByCompany(Company company) throws SomethingWentWrongException;
 
-	Flight getFlightByFlightNumber(String flightNumber) throws SomethingWentWrongException, NoRecordFoundException;
+	Flight getFlightByFlightNumber(long flightNumber) throws SomethingWentWrongException, NoRecordFoundException;
 
 	List<Flight> filterFlightsByDepartureTime(String source, String destination)
 			throws SomethingWentWrongException, NoRecordFoundException;

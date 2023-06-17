@@ -28,28 +28,31 @@ public class PassengerDaoImpl implements PassengerDAO {
 			Query query = em.createQuery(q);
 			query.setParameter("email", email);
 			query.setParameter("password", password);
-			Integer userId = (Integer) query.getSingleResult();
-			if (userId != null) {
+
+			List<Integer> listInt = query.getResultList();
+			if (!listInt.isEmpty()) {
+				Integer userId = listInt.get(0);
 				System.out.println("Logged In Successfully.");
+
 				User loggedInUser = em.find(User.class, userId);
+				System.out.println("------------------------------------------------");
 				System.out.println("Logged-in User Details:");
 				System.out.println("User ID: " + loggedInUser.getId());
 				System.out.println("Username: " + loggedInUser.getUsername());
 				System.out.println("Password: " + loggedInUser.getPassword());
-				System.out.println("First Name : " + loggedInUser.getFname());
-				System.out.println("Last Name : " + loggedInUser.getLname());
-				System.out.println("Ammount in wallet : " + loggedInUser.getWalletAmmount());
+				System.out.println("First Name: " + loggedInUser.getFname());
+				System.out.println("Last Name: " + loggedInUser.getLname());
+				System.out.println("Amount in wallet: " + loggedInUser.getWalletAmmount());
 				System.out.println("------------------------------------------------");
-				UserUI.processUserMenuOption(new Scanner(System.in));
 			} else {
-				System.out.println("User does not exist, Please signup.");
+				System.out.println("User does not exist, please sign up.");
 				MainUI.main(new String[0]);
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 			// System.out.println("Login failed: " + e.getMessage());
-			// throw new LoginException("Something went wrong, try again later.");
+			throw new LoginException("Something went wrong, try again later.");
 		} finally {
 			em.close();
 		}
@@ -67,7 +70,7 @@ public class PassengerDaoImpl implements PassengerDAO {
 			User u1 = new User(fname, password, fname, lname, amt);
 			em.persist(u1);
 			et.commit();
-
+			MainUI.main(new String[0]);
 		} catch (Exception e) {
 			throw new LoginException("Something went wrong, try again later.");
 		} finally {

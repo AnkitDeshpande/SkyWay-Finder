@@ -2,8 +2,11 @@ package com.fbs.Dao;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
+import com.fbs.Entity.Booking;
 import com.fbs.Entity.Company;
+import com.fbs.Entity.Flight;
 import com.fbs.Exception.NoRecordFoundException;
 import com.fbs.Exception.SomethingWentWrongException;
 import com.fbs.Utility.EMUtils;
@@ -74,6 +77,20 @@ public class CompanyDaoImpl implements CompanyDAO {
 			et = em.getTransaction();
 
 			Company company = em.find(Company.class, c.getId());
+			// Delete associated flights
+	        Set<Flight> flights = company.getFlights();
+	        for (Flight flight : flights) {
+	            // Delete associated bookings for each flight
+	            Set<Booking> bookings = flight.getBookings();
+	            for (Booking booking : bookings) {
+	                et.begin();
+	                em.remove(booking);
+	                et.commit();
+	            }
+	            et.begin();
+	            em.remove(flight);
+	            et.commit();
+	        }
 
 			et.begin();
 			em.remove(company);
