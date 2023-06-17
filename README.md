@@ -33,10 +33,8 @@ The Flight Booking System is a Java-based software solution designed to simplify
 
 The following additional features could be considered to enhance the functionality and usability of the flight booking system:
 
--   Seat Selection: Allow customers to select preferred seats during the booking process.
--   Integration with Third-Party Providers: Integrate with third-party flight data providers to fetch real-time availability and pricing information.
--   Integration with Payment Gateways: Integrate with online payment gateways for secure payment processing.
--   Error Handling: Implement robust error handling mechanisms to handle exceptions and provide meaningful error messages to users.
+-   Seat Selection: Allows customers to select preferred seats during the booking process.
+-   Error Handling: Implemented robust error handling mechanisms to handle exceptions and provide meaningful error messages to users.
 
 ## Database and ORM
 
