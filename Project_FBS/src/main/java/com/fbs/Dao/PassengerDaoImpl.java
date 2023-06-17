@@ -23,6 +23,7 @@ public class PassengerDaoImpl implements PassengerDAO {
 		EntityManager em = null;
 		try {
 			em = EMUtils.connect();
+			System.out.println(em);
 			String q = "SELECT u.id FROM User u WHERE u.username = :email AND u.password = :password";
 			Query query = em.createQuery(q);
 			query.setParameter("email", email);

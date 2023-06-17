@@ -229,7 +229,7 @@ public class UserUI {
 	}
 
 	public static void viewBookingById(Scanner sc) {
-		System.out.println("Enter Your Passenger id:");
+		System.out.println("Enter Your Booking id:");
 		int id = sc.nextInt();
 		BookingService b1 = new BookingServImpl();
 		try {

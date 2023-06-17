@@ -172,10 +172,8 @@ public class BookingDaoImpl implements BookingDAO {
 	@Override
 	public Booking getBookingById(int userId) throws NoRecordFoundException, SomethingWentWrongException {
 		try (EntityManager em = EMUtils.connect()) {
-			String queryString = "SELECT b FROM Booking b WHERE id = :id";
-			Query query = em.createQuery(queryString);
-			query.setParameter("id", userId);
-			Booking booking = (Booking) query.getSingleResult();
+			Booking booking = em.find(Booking.class, userId);
+			System.out.println(booking);
 			System.out.println();
 			if (booking == null) {
 				throw new NoRecordFoundException("Booking not found for the given user ID.");
@@ -186,11 +184,4 @@ public class BookingDaoImpl implements BookingDAO {
 			throw new SomethingWentWrongException("Error while retrieving booking by user ID", e);
 		}
 	}
-
-	@Override
-	public Booking getBookingsByPassenger(long id) throws SomethingWentWrongException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
