@@ -20,9 +20,9 @@ public class FlightServImpl implements FlightService {
 	}
 
 	@Override
-	public void updateFlight(Flight flight) throws NoRecordFoundException, SomethingWentWrongException {
+	public void updateFlight(Flight flight, long id) throws NoRecordFoundException, SomethingWentWrongException {
 		FlightDAO f1 = new FlightDaoImpl();
-		f1.updateFlight(flight);
+		f1.updateFlight(flight, id);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class FlightServImpl implements FlightService {
 	}
 
 	@Override
-	public Flight getFlightByFlightNumber(String flightNumber)
+	public Flight getFlightByFlightNumber(long flightNumber)
 			throws SomethingWentWrongException, NoRecordFoundException {
 		FlightDAO f1 = new FlightDaoImpl();
 		return f1.getFlightByFlightNumber(flightNumber);

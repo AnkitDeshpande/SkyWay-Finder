@@ -80,6 +80,7 @@ public class Booking {
 		this.seatNumber = seatNumber;
 	}
 
+	
 	// Overridden equals() and hashCode() methods
 
 	@Override

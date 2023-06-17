@@ -35,7 +35,7 @@ public class Company {
     @Column(name = "website")
     private String website;
     
-    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Flight> flights;
 
     // Constructors, getters, and setters
