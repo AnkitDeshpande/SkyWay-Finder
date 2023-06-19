@@ -46,7 +46,7 @@ public class BookingDaoImpl implements BookingDAO {
 			System.out.println("Enter passenger nationality:");
 			String nationality = sc.next();
 
-			System.out.println("Enter flight number:");
+			System.out.println("Enter flight number [Note* :This is not the Flight Id, This is flight Number. ]:");
 			String flightNumber = sc.next();
 
 			System.out.println(

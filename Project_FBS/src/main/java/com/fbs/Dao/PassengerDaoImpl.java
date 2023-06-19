@@ -78,29 +78,5 @@ public class PassengerDaoImpl implements PassengerDAO {
 		}
 	}
 
-	@Override
-	public void savePassenger(Passenger passenger) throws SomethingWentWrongException {
-
-	}
-
-	@Override
-	public void updatePassenger(Passenger passenger) throws NoRecordFoundException, SomethingWentWrongException {
-
-	}
-
-	@Override
-	public void deletePassenger(Passenger passenger) throws NoRecordFoundException, SomethingWentWrongException {
-
-	}
-
-	@Override
-	public Passenger getPassengerById(int passengerId) throws NoRecordFoundException, SomethingWentWrongException {
-		return null;
-	}
-
-	@Override
-	public List<Passenger> getAllPassengers() throws SomethingWentWrongException {
-		return null;
-	}
 
 }

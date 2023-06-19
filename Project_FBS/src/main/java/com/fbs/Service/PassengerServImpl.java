@@ -23,38 +23,4 @@ public class PassengerServImpl implements PassengerService {
 		p1.signup(email, password,fname,lname,amt);
 	}
 
-	@Override
-	public void savePassenger(Passenger passenger) throws SomethingWentWrongException {
-		PassengerDAO p1 = new PassengerDaoImpl();
-		p1.savePassenger(passenger);
-
-	}
-
-	@Override
-	public void updatePassenger(Passenger passenger) throws NoRecordFoundException, SomethingWentWrongException {
-		PassengerDAO p1 = new PassengerDaoImpl();
-		p1.updatePassenger(passenger);
-
-	}
-
-	@Override
-	public void deletePassenger(Passenger passenger) throws NoRecordFoundException, SomethingWentWrongException {
-		PassengerDAO p1 = new PassengerDaoImpl();
-		p1.deletePassenger(passenger);
-
-	}
-
-	@Override
-	public Passenger getPassengerById(int passengerId) throws NoRecordFoundException, SomethingWentWrongException {
-		PassengerDAO p1 = new PassengerDaoImpl();
-
-		return p1.getPassengerById(passengerId);
-	}
-
-	@Override
-	public List<Passenger> getAllPassengers() throws SomethingWentWrongException {
-		PassengerDAO p1 = new PassengerDaoImpl();
-		return p1.getAllPassengers();
-	}
-
 }

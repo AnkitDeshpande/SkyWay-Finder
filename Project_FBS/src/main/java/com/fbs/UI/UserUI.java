@@ -271,15 +271,22 @@ public class UserUI {
 	}
 
 	public static void showUserMenu() {
-		System.out.println("1. Search for flights by flight number");
-		System.out.println("2. View all flights");
-		System.out.println("3. Filter flight by date.");
-		System.out.println("4. Filter flight by price");
-		System.out.println("5. Filter flight by source and destination");
-		System.out.println("6. Confirm Booking");
-		System.out.println("7. View bookings");
-		System.out.println("8. Cancel booking");
-		System.out.println("0. Logout");
+		System.out.println("╔═════════════════════════════════════════╗");
+		System.out.println("║          Flight Management System       ║");
+		System.out.println("╠═════════════════════════════════════════╣");
+		System.out.println("║          Select an option below:        ║");
+		System.out.println("║                                         ║");
+		System.out.println("║  1. Search for flights by flight number ║");
+		System.out.println("║  2. View all flights                    ║");
+		System.out.println("║  3. Filter flight by date               ║");
+		System.out.println("║  4. Filter flight by price              ║");
+		System.out.println("║  5. Filter flight by source and         ║");
+		System.out.println("║     destination                         ║");
+		System.out.println("║  6. Confirm Booking                     ║");
+		System.out.println("║  7. View bookings                       ║");
+		System.out.println("║  8. Cancel booking                      ║");
+		System.out.println("║  0. Logout                              ║");
+		System.out.println("╚═════════════════════════════════════════╝");
 	}
 
 	public static void processUserMenuOption(Scanner sc) {
