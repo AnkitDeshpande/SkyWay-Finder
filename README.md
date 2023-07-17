@@ -1,4 +1,4 @@
-## Flight Booking System
+## SKYWAY Finder - A Flight Booking System
 ![Flight-Booking-Engine-Clipart](https://github.com/AnkitDeshpande/Flight-Booking-System/assets/115605876/abc5e708-acb8-4fdd-80dd-289cc1d41195)
 
 
